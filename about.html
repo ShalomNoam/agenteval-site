@@ -9,29 +9,54 @@
 <style>
   :root{
     --bg:#F2E6C9;
+    --card:#FBF3DE;
     --ink:#251D11;
     --rule:#C9B48C;
     --accent:#B85C2E;
     --accent-dim:#8A4B24;
   }
+
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;}
+
   body{
     background:var(--bg);
     color:var(--ink);
     font-family:'Assistant',sans-serif;
     min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:24px;
+    position:relative;
+    overflow-x:hidden;
   }
-  .back{
+
+  /* subtle paper grain backdrop, matching the homepage */
+  body::before{
+    content:"";
     position:fixed;
-    top:28px;
-    inset-inline-start:28px;
+    inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:.05;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+    z-index:0;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 50% 35%, transparent 0%, transparent 45%, rgba(37,29,17,.05) 100%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    margin:0 auto;
+    padding:clamp(28px, 6vw, 72px) 24px 96px;
+  }
+
+  .back{
     display:inline-flex;
     align-items:center;
     gap:8px;
@@ -40,24 +65,84 @@
     font-family:'JetBrains Mono', monospace;
     font-size:13px;
     letter-spacing:.04em;
+    padding:8px 4px;
+    transition:color .25s ease, gap .25s ease;
   }
-  .back:hover{ color:var(--accent); }
+  .back:hover, .back:focus-visible{
+    color:var(--accent);
+    gap:12px;
+  }
+
+  header{
+    margin:clamp(32px, 6vh, 56px) 0 clamp(36px, 6vh, 56px);
+    padding-bottom:28px;
+    border-bottom:1px solid var(--rule);
+  }
+
   h1{
     font-family:'Frank Ruhl Libre', serif;
     font-weight:900;
-    font-size:clamp(30px, 5vw, 44px);
+    font-size:clamp(32px, 5.5vw, 46px);
+    line-height:1.2;
     direction:ltr;
+    text-align:left;
   }
-  p{
-    margin-top:14px;
-    color:#6E5C3E;
-    font-size:16px;
+
+  article{
+    font-size:18px;
+    line-height:1.95;
+  }
+
+  article p{
+    margin-bottom:26px;
+  }
+
+  article p:last-child{
+    margin-bottom:0;
+  }
+
+  article a{
+    color:var(--accent-dim);
+    text-decoration:none;
+    border-bottom:1px solid var(--rule);
+    transition:color .25s ease, border-color .25s ease;
+  }
+  article a:hover, article a:focus-visible{
+    color:var(--accent);
+    border-color:var(--accent);
+  }
+
+  @media (max-width:560px){
+    article{font-size:16.5px; line-height:1.85;}
   }
 </style>
 </head>
 <body>
-  <a class="back" href="index.html" dir="ltr"><span>→</span><span>AgentEval</span></a>
-  <h1>About Me</h1>
-  <p>התוכן בדרך.</p>
+  <div class="wrap">
+    <a class="back" href="index.html" dir="ltr">
+      <span>→</span>
+      <span>AgentEval</span>
+    </a>
+
+    <header>
+      <h1 dir="ltr">About Me</h1>
+    </header>
+
+    <article>
+      <p>היי, אני נועם, סטודנט לניהול מערכות מידע ובדרך למצוא את המשרה הבאה שלי.</p>
+
+      <p>אני אוהב לקחת דברים מהרעיון ועד הביצוע: כתבתי PRDs, הובלתי תהליכים מקצה לקצה מול CEO ובעלי עניין ולמדתי שהדבר הכי חשוב הוא לתקשר נכון ולבצע בזמן. את זה עשיתי בתפקיד ה-PM Intern שלי.</p>
+
+      <p>בין הכלים שאני עובד איתם: Jira, Figma, SQL, ו-AI Tools כמו ChatGPT, Claude, Base44 ו-Lovable.</p>
+
+      <p>אני מאמין שהעתיד של ניהול מוצר הוא לשלב אנשים וטכנולוגיה בצורה חכמה.</p>
+
+      <p>מחפש הזדמנות ראשונה בכדי להתפתח ולפתח.</p>
+
+      <p>אני מוסיף קישור ל-<a href="https://www.linkedin.com/in/noam-shalom-/" target="_blank" rel="noopener noreferrer" dir="ltr">LinkedIn</a>.</p>
+
+      <p>תודה רבה על הזמן!</p>
+    </article>
+  </div>
 </body>
 </html>
