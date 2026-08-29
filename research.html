@@ -9,29 +9,54 @@
 <style>
   :root{
     --bg:#F2E6C9;
+    --card:#FBF3DE;
     --ink:#251D11;
     --rule:#C9B48C;
     --accent:#B85C2E;
     --accent-dim:#8A4B24;
   }
+
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;}
+
   body{
     background:var(--bg);
     color:var(--ink);
     font-family:'Assistant',sans-serif;
     min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:24px;
+    position:relative;
+    overflow-x:hidden;
   }
-  .back{
+
+  /* subtle paper grain backdrop, matching the homepage */
+  body::before{
+    content:"";
     position:fixed;
-    top:28px;
-    inset-inline-start:28px;
+    inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:.05;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+    z-index:0;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 50% 35%, transparent 0%, transparent 45%, rgba(37,29,17,.05) 100%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    margin:0 auto;
+    padding:clamp(28px, 6vw, 72px) 24px 96px;
+  }
+
+  .back{
     display:inline-flex;
     align-items:center;
     gap:8px;
@@ -40,24 +65,73 @@
     font-family:'JetBrains Mono', monospace;
     font-size:13px;
     letter-spacing:.04em;
+    padding:8px 4px;
+    transition:color .25s ease, gap .25s ease;
   }
-  .back:hover{ color:var(--accent); }
+  .back:hover, .back:focus-visible{
+    color:var(--accent);
+    gap:12px;
+  }
+
+  header{
+    margin:clamp(32px, 6vh, 56px) 0 clamp(36px, 6vh, 56px);
+    padding-bottom:28px;
+    border-bottom:1px solid var(--rule);
+  }
+
   h1{
     font-family:'Frank Ruhl Libre', serif;
     font-weight:900;
-    font-size:clamp(30px, 5vw, 44px);
+    font-size:clamp(32px, 5.5vw, 46px);
+    line-height:1.2;
     direction:ltr;
+    text-align:left;
   }
-  p{
-    margin-top:14px;
-    color:#6E5C3E;
-    font-size:16px;
+
+  article{
+    font-size:18px;
+    line-height:1.95;
+  }
+
+  article p{
+    margin-bottom:26px;
+  }
+
+  article p:last-child{
+    margin-bottom:0;
+  }
+
+  @media (max-width:560px){
+    article{font-size:16.5px; line-height:1.85;}
   }
 </style>
 </head>
 <body>
-  <a class="back" href="index.html" dir="ltr"><span>→</span><span>AgentEval</span></a>
-  <h1>Research</h1>
-  <p>התוכן בדרך.</p>
+  <div class="wrap">
+    <a class="back" href="index.html" dir="ltr">
+      <span>→</span>
+      <span>AgentEval</span>
+    </a>
+
+    <header>
+      <h1 dir="ltr">Research</h1>
+    </header>
+
+    <article>
+      <p>בשנים האחרונות סוכני בינה מלאכותית עברו ממעמד של כלי ניסיוני למערכות שמדברות ישירות עם לקוחות אמיתיים, בתחומים כמו שירות לקוחות, בנקאות ומסחר. המעבר הזה חושף בעיה שלא הייתה קיימת באותה חומרה כשמדובר היה בתוכנה קלאסית. בוט מבוסס מודל שפה לא פועל לפי חוקים קשיחים וצפויים, אלא מייצר תגובות בצורה גמישה בכל שיחה מחדש, ולכן אי אפשר לבדוק אותו רק באמצעות מבחני יחידה מסורתיים. הבדיקה חייבת לכסות טווח עצום של דרכים אפשריות שבהן משתמש עלול לנסח בקשה, לטעות, להפעיל לחץ או אפילו לנסות לתמרן את המערכת כדי לעקוף מדיניות.</p>
+
+      <p>הגישה המסורתית לבעיה הזו הייתה בדיקה ידנית, שבה צוות אנושי כותב מאות תרחישים אפשריים ומריץ אותם שוב ושוב מול הבוט. השיטה הזו איטית, יקרה ולא ניתנת לקנה מידה. לפי ניתוחים בתחום, כדי להגיע לכיסוי שמודל שיפוט אוטומטי מספק במהלך לילה אחד, נדרש צוות של עשרות בודקים אנושיים שיעבדו במקביל במשך יום שלם.</p>
+
+      <p>בשנים האחרונות התפתחה בקהילת המחקר גישה חלופית שנקראת LLM as a Judge, שבה מודל שפה משמש כשופט שמעריך את הפלט של מודל אחר. המחקר המכונן בתחום, שבחן את הגישה על אלפי השוואות בין תשובות של מודלים שונים, מצא ששופטי GPT-4 הגיעו להסכמה של מעל שמונים אחוז עם העדפות אנושיות, רמה זהה לרמת ההסכמה שמעריכים אנושיים מגיעים אליה ביניהם. מחקרים מאוחרים יותר דיווחו על תוצאות דומות ואף גבוהות מהן, לעיתים עד תשעים אחוז ומעלה, כאשר מודל השפה המשמש כשופט הוא מודל חזק וההנחיה שהוא מקבל בנויה כרשימת קריטריונים ברורים ולא כשאלה כללית ועמומה.</p>
+
+      <p>יחד עם זאת, רמת ההסכמה הזו אינה אחידה בכל סוגי המשימות. בבדיקות שנעשו על משימות פתוחות יותר, כמו כתיבה יצירתית או הנמקה פתוחה, רמת ההסכמה בין שופט מלאכותי לשופט אנושי צנחה לכדי כחמישים עד שישים אחוז בלבד, מה שמעיד על כך שאמינות השופט תלויה מאוד באופי המשימה ובבהירות הקריטריונים שהוגדרו לו מראש.</p>
+
+      <p>לצד זאת, אותם מחקרים חשפו הטיות שיטתיות ברורות. באותו מחקר מכונן נמצא ששופטים מבוססי מודל שפה מעדיפים את התשובה הראשונה שמוצגת להם בעד שבעים וחמישה אחוז מהמקרים, גם כשאין הבדל ממשי באיכות בין שתי התשובות. נמצאה גם הטיית העדפה עצמית, כלומר מודל שמשמש כשופט נוטה להעדיף תשובות שהופקו על ידי מודלים מאותה משפחה שלו, כאשר אצל GPT-4 ההטיה הזו הייתה בסביבות עשרה אחוז יתרון בשיעור הזכייה, ואצל מודלים אחרים שנבדקו ההטיה הגיעה עד כדי עשרים וחמישה אחוז. הטיה נוספת שתועדה היא נטייה עקבית להעדיף תשובות ארוכות יותר, גם כשאורך התשובה לא תרם בפועל לאיכותה.</p>
+
+      <p>כדי להתמודד עם ההטיות הללו, אחת השיטות המקובלות כיום היא לבדוק את השופט עצמו כמערכת שצריכה בקרה, למשל להציג לו את אותו זוג תשובות פעמיים בסדר הפוך, ואם פסק הדין מתהפך זהו סימן ברור להטיה לפי מיקום ולא הערכה אמיתית של התוכן. שיטה נוספת היא כיול השופט מול מדגם קטן של דוגמאות שסומנו ידנית, ובדיקה חוזרת שלו לאורך זמן כדי לוודא שהוא לא סוטה מהסטנדרט שנקבע.</p>
+
+      <p>התפתחות נוספת בתחום היא המעבר מהערכה חד ממדית של תשובה בודדת, להערכה של סוכן שלם לאורך תהליך, כולל הבחירות שהוא עושה, השימוש בכלים והדרך שבה הוא מגיע לתשובה. גישה כזו נדרשת כי סוכן יכול להצליח במשימה דרך נתיב בזבזני או שגוי, או לבצע קריאות לכלים בהצלחה טכנית אך עדיין לא לענות בפועל על מה שהמשתמש רצה. בהקשר הזה, סקרים על אימוץ הגישה בתעשייה מדווחים כי כתשעים ושניים אחוז מהצוותים שמפתחים מוצרי בינה מלאכותית כבר משלבים היום הערכה אוטומטית כלשהי בתהליך הפיתוח השוטף שלהם, מה שמעיד על כך שהמעבר משיפוט אנושי לשיפוט מבוסס מודל שפה הוא כבר לא כיוון עתידי אלא מגמה מבוססת בתעשייה.</p>
+    </article>
+  </div>
 </body>
 </html>
