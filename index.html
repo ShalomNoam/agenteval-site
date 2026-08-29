@@ -89,7 +89,10 @@
     line-height:1.75;
     color:var(--ink);
     text-align:right;
-    transform:translateX(28px);
+  }
+  /* nudge the subtitle rightward, only where there is slack beside it */
+  @media (min-width:600px){
+    .sub{ transform:translateX(clamp(32px, 6vw, 96px)); }
   }
 
   nav.index{
