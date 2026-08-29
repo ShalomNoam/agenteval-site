@@ -8,15 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=Rubik:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#EAF8F8;
-    --bg-hi:#F3FBFB;
-    --bg-lo:#E0F3F2;
-    --card:#D7F2F1;
-    --ink:#251D11;
-    --ink-2:#2B2013;
-    --rule:#C9B48C;
-    --accent:#B85C2E;
-    --accent-dim:#8A4B24;
+    --bg:#FCFBF8;
+    --bg-hi:#FFFFFF;
+    --bg-lo:#F1EADB;
+    --card:#EFE7D5;
+    --ink:#1B2A47;
+    --ink-2:#22345A;
+    --rule:#D8C8AB;
+    --accent:#2E4E86;
+    --accent-dim:#3C568A;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -52,7 +52,7 @@
     content:"";
     position:fixed;
     inset:0;
-    background:radial-gradient(circle at 50% 28%, transparent 0%, transparent 40%, rgba(16,38,38,.06) 100%);
+    background:radial-gradient(circle at 50% 28%, transparent 0%, transparent 40%, rgba(20,28,50,.05) 100%);
     pointer-events:none;
     z-index:0;
   }
@@ -127,9 +127,9 @@
     padding:26px 34px;
     position:relative;
     background:var(--card);
-    border:1px solid rgba(37,29,17,.12);
+    border:1px solid rgba(20,28,50,.12);
     border-radius:16px;
-    box-shadow:0 2px 6px rgba(37,29,17,.06);
+    box-shadow:0 2px 6px rgba(20,28,50,.06);
     transition:transform .3s cubic-bezier(.22,1,.36,1),
                box-shadow .3s ease,
                border-color .3s ease,
@@ -141,7 +141,7 @@
     transform:translateY(-4px);
     background-color:var(--ink);
     border-color:var(--ink);
-    box-shadow:0 18px 34px rgba(37,29,17,.20);
+    box-shadow:0 18px 34px rgba(20,28,50,.20);
   }
 
   .doc-row a:active{
@@ -179,7 +179,7 @@
   .doc-title-block .desc{
     margin-top:6px;
     font-size:14.5px;
-    color:#8A7654;
+    color:#5A6B88;
     max-width:46ch;
   }
 
@@ -192,7 +192,7 @@
   .doc-row a:hover .arrow,
   .doc-row a:focus-visible .arrow{
     transform:translateX(6px);
-    color:#E8A876;
+    color:#AEC1E4;
   }
 
   @keyframes riseIn{
