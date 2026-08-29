@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מסמך הפרויקט</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2E6C9;
+    --ink:#251D11;
+    --ink-2:#2B2013;
+    --rule:#C9B48C;
+    --accent:#B85C2E;
+    --accent-dim:#8A4B24;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{height:100%;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Assistant',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* subtle paper grain backdrop */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:.05;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 50% 35%, transparent 0%, transparent 45%, rgba(37,29,17,.05) 100%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:920px;
+    width:100%;
+    margin:0 auto;
+    padding:24px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  header{
+    text-align:center;
+    margin-bottom:clamp(36px, 7vh, 64px);
+    opacity:0;
+    animation:riseIn .7s ease forwards;
+  }
+
+  h1{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:900;
+    font-size:clamp(40px, 7vw, 64px);
+    letter-spacing:.01em;
+    color:var(--ink);
+  }
+
+  .sub{
+    margin:18px auto 0;
+    max-width:46ch;
+    font-family:'Assistant', sans-serif;
+    font-size:17px;
+    line-height:1.75;
+    color:#6E5C3E;
+    text-align:right;
+  }
+
+  nav.index{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .doc-row{
+    opacity:0;
+    animation:riseIn .6s ease forwards;
+  }
+  .doc-row:nth-child(1){animation-delay:.15s}
+  .doc-row:nth-child(2){animation-delay:.25s}
+  .doc-row:nth-child(3){animation-delay:.35s}
+  .doc-row:nth-child(4){animation-delay:.45s}
+  .doc-row:nth-child(5){animation-delay:.55s}
+
+  .doc-row a{
+    text-decoration:none;
+    color:inherit;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:center;
+    gap:20px;
+    padding:28px 34px;
+    position:relative;
+    background:#FBF3DE;
+    border:1px solid var(--rule);
+    border-radius:16px;
+    box-shadow:0 1px 2px rgba(37,29,17,.05);
+    transition:transform .3s cubic-bezier(.22,1,.36,1),
+               box-shadow .3s ease,
+               border-color .3s ease,
+               background-color .3s ease;
+  }
+
+  .doc-row a:hover,
+  .doc-row a:focus-visible{
+    transform:translateY(-3px);
+    background-color:var(--ink);
+    border-color:var(--ink);
+    box-shadow:0 14px 28px rgba(37,29,17,.18);
+  }
+
+  .doc-row a:active{
+    transform:translateY(-1px);
+  }
+
+  .doc-row a:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--accent-dim);
+    letter-spacing:.05em;
+    transition:color .35s ease;
+  }
+  .doc-row a:hover .num,
+  .doc-row a:focus-visible .num{
+    color:var(--accent);
+  }
+
+  .doc-title-block .title{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:clamp(22px, 3.2vw, 30px);
+    color:var(--ink);
+    transition:color .3s ease;
+  }
+  .doc-row a:hover .title,
+  .doc-row a:focus-visible .title{
+    color:var(--bg);
+  }
+  .doc-title-block .desc{
+    margin-top:6px;
+    font-size:14.5px;
+    color:#8A7654;
+    max-width:46ch;
+  }
+
+  .arrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:20px;
+    color:var(--accent);
+    transition:transform .3s cubic-bezier(.22,1,.36,1), color .3s ease;
+  }
+  .doc-row a:hover .arrow,
+  .doc-row a:focus-visible .arrow{
+    transform:translateX(6px);
+    color:#E8A876;
+  }
+
+  @keyframes riseIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .doc-row{animation:none !important; opacity:1 !important; transform:none !important;}
+    .doc-row a, .doc-row a::before, .arrow, .num{transition:none !important;}
+  }
+
+  @media (max-width:560px){
+    .doc-row a{
+      grid-template-columns:1fr;
+      gap:6px;
+      padding:22px 22px;
+    }
+    .arrow{display:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header dir="ltr">
+      <h1>AgentEval</h1>
+      <p class="sub" dir="rtl">פלטפורמת QA אוטומטית לסוכני AI: מריצה לקוחות סינתטיים מול בוט AI כדי לתפוס נקודות כשל לפני שלקוח אמיתי עושה זאת ונותנת ציון בטיחות ברור תוך שניות.</p>
+    </header>
+
+    <nav class="index" dir="ltr">
+      <div class="doc-row">
+        <a href="problem.html">
+          <span class="doc-title-block">
+            <span class="title">The problem</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="doc-row">
+        <a href="prd.html">
+          <span class="doc-title-block">
+            <span class="title">PRD</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="doc-row">
+        <a href="demo.html">
+          <span class="doc-title-block">
+            <span class="title">Live Demo</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="doc-row">
+        <a href="research.html">
+          <span class="doc-title-block">
+            <span class="title">Research</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="doc-row">
+        <a href="about.html">
+          <span class="doc-title-block">
+            <span class="title">About Me</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</body>
+</html>
