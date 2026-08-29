@@ -11,7 +11,7 @@
     --bg:#F8F3E6;
     --bg-hi:#FCF9F1;
     --bg-lo:#F1E9D6;
-    --card:#FFFDF7;
+    --card:#E6CDB0;
     --ink:#251D11;
     --ink-2:#2B2013;
     --rule:#C9B48C;
@@ -127,26 +127,13 @@
     padding:26px 34px;
     position:relative;
     background:var(--card);
-    border:1px solid var(--rule);
-    border-radius:20px 5px 20px 5px;
-    box-shadow:0 1px 2px rgba(37,29,17,.05);
+    border:1px solid rgba(37,29,17,.12);
+    border-radius:16px;
+    box-shadow:0 2px 6px rgba(37,29,17,.06);
     transition:transform .3s cubic-bezier(.22,1,.36,1),
                box-shadow .3s ease,
                border-color .3s ease,
                background-color .3s ease;
-  }
-
-  /* accent spine on the reading edge */
-  .doc-row a::before{
-    content:"";
-    position:absolute;
-    inset-inline-start:0;
-    top:14px;
-    bottom:14px;
-    width:3px;
-    border-radius:3px;
-    background:var(--accent);
-    transition:top .3s ease, bottom .3s ease, background .3s ease;
   }
 
   .doc-row a:hover,
@@ -155,12 +142,6 @@
     background-color:var(--ink);
     border-color:var(--ink);
     box-shadow:0 18px 34px rgba(37,29,17,.20);
-  }
-  .doc-row a:hover::before,
-  .doc-row a:focus-visible::before{
-    top:6px;
-    bottom:6px;
-    background:#E8A876;
   }
 
   .doc-row a:active{
@@ -221,7 +202,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .doc-row{animation:none !important; opacity:1 !important; transform:none !important;}
-    .doc-row a, .doc-row a::before, .arrow, .num{transition:none !important;}
+    .doc-row a, .arrow, .num{transition:none !important;}
   }
 
   @media (max-width:560px){
