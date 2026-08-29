@@ -104,7 +104,7 @@
   nav.index{
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:18px;
   }
 
   .doc-row{
@@ -117,6 +117,10 @@
   .doc-row:nth-child(4){animation-delay:.45s}
   .doc-row:nth-child(5){animation-delay:.55s}
 
+  /* staggered, off-axis layout — each row leans the other way */
+  .doc-row:nth-child(odd){ margin-inline-end:clamp(14px, 6vw, 58px); }
+  .doc-row:nth-child(even){ margin-inline-start:clamp(14px, 6vw, 58px); }
+
   .doc-row a{
     text-decoration:none;
     color:inherit;
@@ -124,33 +128,55 @@
     grid-template-columns:1fr auto;
     align-items:center;
     gap:20px;
-    padding:28px 34px;
+    padding:26px 34px;
     position:relative;
     background:var(--card);
     border:1px solid var(--rule);
-    border-radius:16px;
+    border-radius:22px 5px 22px 5px;
     box-shadow:0 1px 2px rgba(37,29,17,.05);
-    transition:transform .3s cubic-bezier(.22,1,.36,1),
-               box-shadow .3s ease,
+    transition:transform .32s cubic-bezier(.22,1,.36,1),
+               box-shadow .32s ease,
                border-color .3s ease,
                background-color .3s ease;
   }
+  .doc-row:nth-child(odd) a{ transform:rotate(-.55deg); }
+  .doc-row:nth-child(even) a{ transform:rotate(.55deg); border-radius:5px 22px 5px 22px; }
+
+  /* accent spine on the flush edge, mirrored per row */
+  .doc-row a::before{
+    content:"";
+    position:absolute;
+    inset-inline-start:0;
+    top:15px;
+    bottom:15px;
+    width:3px;
+    border-radius:3px;
+    background:var(--accent);
+    transition:top .32s ease, bottom .32s ease, background .3s ease;
+  }
+  .doc-row:nth-child(even) a::before{ inset-inline-start:auto; inset-inline-end:0; }
 
   .doc-row a:hover,
   .doc-row a:focus-visible{
-    transform:translateY(-3px);
+    transform:translateY(-4px) rotate(0deg);
     background-color:var(--ink);
     border-color:var(--ink);
-    box-shadow:0 14px 28px rgba(37,29,17,.18);
+    box-shadow:0 20px 38px rgba(37,29,17,.20);
+  }
+  .doc-row a:hover::before,
+  .doc-row a:focus-visible::before{
+    top:7px;
+    bottom:7px;
+    background:#E8A876;
   }
 
   .doc-row a:active{
-    transform:translateY(-1px);
+    transform:translateY(-1px) rotate(0deg);
   }
 
   .doc-row a:focus-visible{
     outline:2px solid var(--accent);
-    outline-offset:3px;
+    outline-offset:4px;
   }
 
   .num{
@@ -202,14 +228,19 @@
 
   @media (prefers-reduced-motion: reduce){
     .doc-row{animation:none !important; opacity:1 !important; transform:none !important;}
+    .doc-row:nth-child(odd) a, .doc-row:nth-child(even) a{transform:none !important;}
     .doc-row a, .doc-row a::before, .arrow, .num{transition:none !important;}
   }
 
   @media (max-width:560px){
+    .doc-row:nth-child(odd), .doc-row:nth-child(even){
+      margin-inline-start:0;
+      margin-inline-end:0;
+    }
     .doc-row a{
       grid-template-columns:1fr;
       gap:6px;
-      padding:22px 22px;
+      padding:22px 22px 22px 24px;
     }
     .arrow{display:none;}
   }
