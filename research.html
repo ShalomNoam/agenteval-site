@@ -101,6 +101,24 @@
     margin-bottom:0;
   }
 
+  .source{
+    margin-top:clamp(40px, 7vh, 64px);
+    font-size:14px;
+    line-height:1.7;
+    color:#6E5C3E;
+  }
+  .source a{
+    color:var(--accent-dim);
+    text-decoration:none;
+    border-bottom:1px solid var(--rule);
+    transition:color .25s ease, border-color .25s ease;
+    overflow-wrap:anywhere;
+  }
+  .source a:hover, .source a:focus-visible{
+    color:var(--accent);
+    border-color:var(--accent);
+  }
+
   @media (max-width:560px){
     article{font-size:16.5px; line-height:1.85;}
   }
@@ -132,6 +150,10 @@
 
       <p>התפתחות נוספת בתחום היא המעבר מהערכה חד ממדית של תשובה בודדת, להערכה של סוכן שלם לאורך תהליך, כולל הבחירות שהוא עושה, השימוש בכלים והדרך שבה הוא מגיע לתשובה. גישה כזו נדרשת כי סוכן יכול להצליח במשימה דרך נתיב בזבזני או שגוי, או לבצע קריאות לכלים בהצלחה טכנית אך עדיין לא לענות בפועל על מה שהמשתמש רצה. בהקשר הזה, סקרים על אימוץ הגישה בתעשייה מדווחים כי כתשעים ושניים אחוז מהצוותים שמפתחים מוצרי בינה מלאכותית כבר משלבים היום הערכה אוטומטית כלשהי בתהליך הפיתוח השוטף שלהם, מה שמעיד על כך שהמעבר משיפוט אנושי לשיפוט מבוסס מודל שפה הוא כבר לא כיוון עתידי אלא מגמה מבוססת בתעשייה.</p>
     </article>
+
+    <p class="source">
+      מקור: <a href="https://www.confident-ai.com/blog/why-llm-as-a-judge-is-the-best-llm-evaluation-method" target="_blank" rel="noopener noreferrer" dir="ltr">Why LLM-as-a-Judge is the Best LLM Evaluation Method — Confident AI</a>
+    </p>
   </div>
 </body>
 </html>
