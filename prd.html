@@ -4,34 +4,61 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRD · AgentEval</title>
+<meta name="description" content="מסמך אפיון (PRD) עבור AgentEval — פלטפורמת QA אוטומטית לסוכני AI מבוססת LLM-as-a-Judge.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#F2E6C9;
+    --card:#FBF3DE;
     --ink:#251D11;
     --rule:#C9B48C;
     --accent:#B85C2E;
     --accent-dim:#8A4B24;
+    --muted:#6E5C3E;
   }
+
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;}
+
   body{
     background:var(--bg);
     color:var(--ink);
     font-family:'Assistant',sans-serif;
     min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:24px;
+    position:relative;
+    overflow-x:hidden;
   }
-  .back{
+
+  /* subtle paper grain backdrop, matching the homepage */
+  body::before{
+    content:"";
     position:fixed;
-    top:28px;
-    inset-inline-start:28px;
+    inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:.05;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+    z-index:0;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 50% 35%, transparent 0%, transparent 45%, rgba(37,29,17,.05) 100%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:780px;
+    margin:0 auto;
+    padding:clamp(28px, 6vw, 72px) 24px 112px;
+  }
+
+  .back{
     display:inline-flex;
     align-items:center;
     gap:8px;
@@ -40,24 +67,341 @@
     font-family:'JetBrains Mono', monospace;
     font-size:13px;
     letter-spacing:.04em;
+    padding:8px 4px;
+    transition:color .25s ease, gap .25s ease;
   }
-  .back:hover{ color:var(--accent); }
+  .back:hover, .back:focus-visible{
+    color:var(--accent);
+    gap:12px;
+  }
+
+  header{
+    margin:clamp(32px, 6vh, 56px) 0 clamp(28px, 5vh, 44px);
+    padding-bottom:24px;
+    border-bottom:1px solid var(--rule);
+  }
+
   h1{
     font-family:'Frank Ruhl Libre', serif;
     font-weight:900;
-    font-size:clamp(30px, 5vw, 44px);
-    direction:ltr;
+    font-size:clamp(32px, 5.5vw, 46px);
+    line-height:1.2;
   }
-  p{
+
+  .lede{
     margin-top:14px;
-    color:#6E5C3E;
+    color:var(--muted);
     font-size:16px;
+    line-height:1.7;
+    max-width:52ch;
+  }
+
+  article{
+    font-size:17px;
+    line-height:1.9;
+  }
+
+  h2{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:900;
+    font-size:clamp(24px, 3.8vw, 32px);
+    line-height:1.3;
+    margin:60px 0 22px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--rule);
+  }
+
+  h3{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:clamp(20px, 2.9vw, 25px);
+    line-height:1.35;
+    margin:44px 0 16px;
+    color:var(--ink);
+  }
+
+  h4{
+    font-family:'Assistant', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:.01em;
+    margin:28px 0 10px;
+    color:var(--accent-dim);
+  }
+
+  article p{
+    margin-bottom:20px;
+  }
+  article p:last-child{ margin-bottom:0; }
+
+  .assumption{
+    margin-bottom:6px;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  article ul,
+  article ol{
+    margin:0 0 24px;
+    padding-inline-start:1.5em;
+  }
+  article li{
+    margin-bottom:12px;
+    line-height:1.8;
+  }
+  article li::marker{
+    color:var(--accent-dim);
+  }
+
+  article strong{
+    font-weight:700;
+    color:var(--ink);
+  }
+
+  .tag{
+    font-family:'Assistant', sans-serif;
+    font-weight:700;
+    color:var(--accent-dim);
+    unicode-bidi:isolate;
+    white-space:nowrap;
+    margin-inline-end:2px;
+  }
+
+  /* stage lead-in line */
+  .flow-note{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:12px;
+    padding:16px 20px;
+    font-size:15.5px;
+    line-height:1.7;
+    color:var(--muted);
+    margin-bottom:24px;
+  }
+
+  /* open questions */
+  .q{
+    margin-bottom:22px;
+    padding-inline-start:16px;
+    border-inline-start:2px solid var(--rule);
+  }
+  .q-text{
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:6px !important;
+  }
+  .q-why{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--muted);
+    margin-bottom:0 !important;
+  }
+  .q-label{
+    font-weight:700;
+    color:var(--accent-dim);
+    margin-inline-end:6px;
+  }
+
+  @media (max-width:560px){
+    article{ font-size:16px; line-height:1.85; }
   }
 </style>
 </head>
 <body>
-  <a class="back" href="index.html" dir="ltr"><span>→</span><span>AgentEval</span></a>
-  <h1>PRD</h1>
-  <p>התוכן בדרך.</p>
+  <div class="wrap">
+    <a class="back" href="index.html" dir="ltr">
+      <span>→</span>
+      <span>AgentEval</span>
+    </a>
+
+    <header>
+      <h1>מסמך אפיון (PRD)</h1>
+      <p class="lede">פלטפורמת QA אוטומטית לסוכני AI, מבוססת עקרון LLM-as-a-Judge.</p>
+    </header>
+
+    <article>
+
+      <h2>למה LLM-as-a-Judge ולא פתרון פשוט יותר?</h2>
+
+      <h3>אלטרנטיבות שנשקלו</h3>
+      <p>בתהליך החשיבה הראשוני נשקלו שתי חלופות פשוטות יותר:</p>
+      <ol>
+        <li><strong>בדיקה ידנית על ידי צוות QA אנושי</strong> — צוות מקליד ידנית מאות שאלות כדי לתפוס איפה הבוט נשבר. חוסך את הצורך בתשתית AI מורכבת, אך איטי, לא ניתן להרחבה, ותלוי לחלוטין בדמיון ובזמן של הבודקים — מה שאומר כיסוי חלקי ובלתי עקבי של תרחישים.</li>
+        <li><strong>תסריטי בדיקה קבועים מראש</strong> — שיחות "מתוסרטות" שרצות אוטומטית מול הבוט. מהיר להרצה חוזרת, אך לא פותר את הבעיה המרכזית: שיחות אמיתיות עם לקוחות הן דינמיות ובלתי צפויות, ובוט שעובר תסריט קבוע עלול להיכשל בשיחה אמיתית שמתפתחת אחרת.</li>
+      </ol>
+      <p>לכן נבחר הפתרון המלא — פרסונות AI שמנהלות שיחה אמיתית ולא מתוסרטת, בשילוב שופט AI שמעריך את השיחה בסיומה. הפתרון הזה פותר גם את בעיית המהירות/היקף (לעומת בדיקה ידנית) וגם את בעיית הריאליזם (לעומת תסריטים קבועים).</p>
+
+      <h2>1. מסמך אפיון (PRD)</h2>
+
+      <h3>שלב 1 — מה בונים ולמה</h3>
+
+      <h4>מה בונים</h4>
+      <p>תכונה/מוצר בשם AgentEval — פלטפורמת QA אוטומטית לסוכני AI, מבוססת עקרון LLM-as-a-Judge. הפלטפורמה מריצה "לקוחות סינתטיים" — פרסונות AI עם אופי ומטרה משלהן — שמנהלות שיחה אמיתית ולא מתוסרטת מול סוכן ה-AI הנבדק. בסיום השיחה, שופט AI נפרד מנתח את התמלול מול המדיניות/נהלים שהוגדרו מראש לסוכן, ומפיק ציון והערכה כתובה — כולל אינדיקציה היכן הסוכן נכשל, אם נכשל.</p>
+
+      <h4>למה בונים</h4>
+      <p>כיום, צוות מוצר שרוצה לוודא שסוכן AI מוכן לשחרור ללקוחות אמיתיים נאלץ לבחור באחת משתי דרכים גרועות:</p>
+      <ol>
+        <li><strong>בדיקה ידנית</strong> — אדם או צוות מקלידים עשרות עד מאות שאלות בעצמם כדי לנסות "לשבור" את הבוט. תהליך איטי, מייגע, ותלוי ביכולת האנושית לחשוב על כל התרחישים האפשריים — מה שמותיר פערי כיסוי משמעותיים.</li>
+        <li><strong>שחרור ללא בדיקה מספקת / הסתמכות על תחושת בטן</strong> — צוותי מוצר משחררים סוכן AI לעולם האמיתי בלי ביטחון אמיתי שהוא עומד בנהלים, במיוחד תחת לחץ או ניסיון מניפולציה מצד לקוח.</li>
+      </ol>
+      <p>המטרה של AgentEval היא לקצר את מחזור הבדיקות מימים לדקות, ולתת לצוותי מוצר ביטחון מבוסס נתונים — לא תחושת בטן — לפני שחרור.</p>
+
+      <h4>מי המשתמשים (קהל יעד עיקרי)</h4>
+      <p>בגרסה זו קיים קהל יעד אחד — עובד בחברה שאחראי על בדיקת סוכן ה-AI לפני שחרור. זה יכול להיות:</p>
+      <ol>
+        <li><strong>עובד QA</strong> — מתמקד במציאת נקודות כשל ספציפיות בשיחה, בכיסוי תרחישים.</li>
+        <li><strong>מנהל מוצר</strong> — מתמקד בציון הכולל ובביטחון להחלטת go/no-go לשחרור.</li>
+        <li><strong>מפתח הסוכן</strong> — מתמקד בהבנת נקודת הכשל המדויקת בתמלול לצורך תיקון.</li>
+      </ol>
+
+      <h4>הנחות מרכזיות</h4>
+      <p>שלושת תתי-התפקידים חולקים את אותו core flow ואת אותה תשתית טכנית — ההבדל ביניהם הוא באיזה חלק של הדו"ח הם מתמקדים (ציון מול תמלול מפורט), לא בדרישה למוצר שונה. לכן לא נבנה שלושה ממשקים נפרדים אלא מוצר אחד שמשרת את כולם.</p>
+      <p>בגרסה הנוכחית (MVP):</p>
+      <ul>
+        <li>נבדק סוכן AI יחיד בכל פעם.</li>
+        <li>קיימות 4 פרסונות קבועות בלבד (ללא אפשרות ליצור פרסונה מותאמת אישית).</li>
+        <li>כל שיחה כוללת 4 חילופי דברים (הודעת פרסונה + תגובת בוט, פעמיים).</li>
+        <li>השיחה מתנהלת בטקסט בלבד.</li>
+        <li>הרצה אחת = פרסונה אחת — לא ניתן להריץ כמה פרסונות במקביל באותה הרצה.</li>
+      </ul>
+      <p>יתכן שבהמשך יתברר צורך עסקי בהרחבת מספר הפרסונות, אורך השיחה, או תמיכה בכמה סוכנים במקביל — אך זה נדחה לגרסה עתידית.</p>
+
+      <h4>מדד הצלחה מרכזי</h4>
+      <p class="assumption">(לא הוגדר רשמית על ידי הצד העסקי, אך נדרש לצורך מיקוד המוצר)</p>
+      <p>הצלחה נמדדת ביכולת הפלטפורמה לזהות בפועל נקודות כשל אמיתיות של הסוכן הנבדק לפני שחרורו ללקוחות, ובקיצור זמן מחזור הבדיקה (מימים לדקות) עבור צוות המוצר. מדד משני: כמות הרצות שהושלמו בהצלחה מקצה לקצה (משיחה ועד דו"ח) לעומת הרצות שנכשלו טכנית (למשל עקב תקלה בבוט הנבדק).</p>
+
+      <h3>שלב 2 — הפלואו המרכזי</h3>
+      <p class="flow-note">הנחת יסוד לכל הפלואו: כל הרצה בודקת פרסונה אחת מול סוכן AI אחד, ומייצרת דו"ח יחיד בסיומה.</p>
+      <ol>
+        <li><strong>הגדרת המדיניות/נהלים של הסוכן הנבדק</strong> — המשתמש מגדיר מראש (בטקסט חופשי, ניתן לעריכה) את הנהלים שהסוכן חייב לעמוד בהם, למשל "חובה לאמת זהות לפני חשיפת יתרה" עבור קלירקארד. הנהלים משויכים לסוכן הנבדק.</li>
+        <li><strong>בחירת פרסונה</strong> — המשתמש בוחר פרסונה אחת מתוך 4 הפרסונות הקיימות במערכת (רועי אלמוג — VIP בלחץ זמן; מירב שגיא — לקוחה זועמת; יעקב פרידמן — לקוח מבולבל; עידן כרמון — טוען שהובטח לו הכל).</li>
+        <li><strong>הרצת השיחה</strong> — המערכת מפעילה את הפרסונה שנבחרה מול הסוכן הנבדק. השיחה מתנהלת בזמן אמת ואינה מתוסרטת מראש — הפרסונה מגיבה דינמית לתשובות הסוכן, לאורך 4 חילופי דברים (הודעת פרסונה ← תגובת סוכן, פעמיים).</li>
+        <li><strong>שיפוט</strong> — עם תום 4 חילופי הדברים, שופט AI נפרד מנתח את מלוא תמלול השיחה מול הנהלים שהוגדרו לסוכן בשלב 1.</li>
+        <li><strong>הפקת דו"ח</strong> — המערכת מציגה למשתמש דו"ח מפורט הכולל ציון מספרי, הערכה כתובה, ואינדיקציה היכן ואיך הסוכן נכשל (אם נכשל) — יחד עם תמלול השיחה המלא.</li>
+        <li><strong>פתיחת הרצה חדשה</strong> — לאחר סיום ההרצה, המשתמש יכול להגדיר ולהפעיל הרצה חדשה עם אותה פרסונה או אחרת.</li>
+      </ol>
+
+      <h3>שלב 3 — דרישות פונקציונליות</h3>
+
+      <h4><span class="tag" dir="ltr">A.</span> הגדרת מדיניות/נהלים</h4>
+      <ul>
+        <li><span class="tag" dir="ltr">A.1</span> ניתן להגדיר נהלים לסוכן הנבדק בטקסט חופשי לפני תחילת הרצות.</li>
+        <li><span class="tag" dir="ltr">A.2</span> ניתן לערוך את הנהלים בין הרצות (הנחת עבודה: לא ניתן לערוך במהלך הרצה פעילה).</li>
+        <li><span class="tag" dir="ltr">A.3</span> בגרסה זו הנהלים משויכים לסוכן יחיד — אין תמיכה בכמה סטים של נהלים לכמה סוכנים.</li>
+      </ul>
+
+      <h4><span class="tag" dir="ltr">B.</span> פרסונות</h4>
+      <ul>
+        <li><span class="tag" dir="ltr">B.1</span> יש 4 פרסונות קבועות זמינות במערכת: רועי אלמוג (VIP בלחץ זמן, דורש אישור מיידי), מירב שגיא (לקוחה זועמת, כרטיס נחסם בטעות), יעקב פרידמן (לקוח מבולבל, לא זוכר מה סוכם), עידן כרמון (טוען שהובטח לו הכל בלי אימות).</li>
+        <li><span class="tag" dir="ltr">B.2</span> כל פרסונה כוללת אופי, מטרה ותרחיש פתיחה קבועים מראש בקוד/בהגדרה — לא ניתנת ליצירה או עריכה בגרסה זו.</li>
+        <li><span class="tag" dir="ltr">B.3</span> בכל הרצה נבחרת פרסונה אחת בלבד.</li>
+      </ul>
+
+      <h4><span class="tag" dir="ltr">C.</span> הרצת שיחה</h4>
+      <ul>
+        <li><span class="tag" dir="ltr">C.1</span> השיחה מתנהלת בטקסט בלבד.</li>
+        <li><span class="tag" dir="ltr">C.2</span> כל שיחה כוללת 4 חילופי דברים בדיוק (הודעת פרסונה + תגובת סוכן = חילוף אחד).</li>
+        <li><span class="tag" dir="ltr">C.3</span> השיחה אינה מתוסרטת מראש — הפרסונה מגיבה באופן דינמי לתוכן תגובות הסוכן בפועל.</li>
+        <li><span class="tag" dir="ltr">C.4</span> בכל רגע נתון מתנהלת הרצה אחת בלבד עבור המשתמש (הנחת עבודה, נגזרת מ"ריצה אחת = פרסונה אחת").</li>
+      </ul>
+
+      <h4><span class="tag" dir="ltr">D.</span> שיפוט (Judge)</h4>
+      <ul>
+        <li><span class="tag" dir="ltr">D.1</span> עם תום 4 חילופי הדברים, שופט AI מנתח את מלוא התמלול.</li>
+        <li><span class="tag" dir="ltr">D.2</span> השיפוט מתבסס על הנהלים שהוגדרו מראש לסוכן הנבדק (שלב A).</li>
+        <li><span class="tag" dir="ltr">D.3</span> פלט השיפוט כולל ציון מספרי + הערכה כתובה.</li>
+        <li><span class="tag" dir="ltr">D.4</span> ההערכה הכתובה כוללת אינדיקציה לנקודה המדויקת שבה הסוכן נכשל, אם נכשל.</li>
+      </ul>
+
+      <h4><span class="tag" dir="ltr">E.</span> דו"ח</h4>
+      <ul>
+        <li><span class="tag" dir="ltr">E.1</span> בסיום כל הרצה מוצג דו"ח הכולל ציון מספרי, הערכה כתובה ותמלול מלא של השיחה.</li>
+        <li><span class="tag" dir="ltr">E.2</span> בסיום הרצה ניתן להגדיר ולהפעיל הרצה חדשה (הנחת עבודה: עם אותה פרסונה או פרסונה אחרת מתוך ה-4 הקיימות).</li>
+        <li><span class="tag" dir="ltr">E.3</span> (הנחת עבודה) קיימת אפשרות לצפות בהיסטוריית הרצות קודמות ודוחותיהן.</li>
+      </ul>
+
+      <p class="assumption">הנחות מרכזיות נוספות:</p>
+      <p>מספר הפרסונות (4), אורך השיחה (4 חילופי דברים), ובדיקת סוכן יחיד בכל פעם — כולם ערכים ראשוניים של גרסת MVP, הטעונים אימות והרחבה בהמשך.</p>
+
+      <h3>שלב 4 — תרחישים ומקרי קצה</h3>
+
+      <h4>הסוכן הנבדק אינו מגיב / תקלה טכנית</h4>
+      <p>אם הסוכן הנבדק אינו מחזיר תגובה בתוך זמן סביר, ההרצה מסומנת ככשל טכני (ולא ככשל מדיניות), והמשתמש מקבל הודעה מתאימה בנפרד מהערכת השופט (הנחת עבודה, טעון אימות פיתוח).</p>
+
+      <h4>הסוכן "נשבר" לפני תום 4 חילופי הדברים</h4>
+      <p>גם אם הסוכן חורג מהנהלים כבר בחילוף הדברים הראשון, השיחה ממשיכה עד תום 4 החילופים כפי שהוגדרו, והשופט מעריך את מלוא התמלול בסיום (ולא עוצר את השיחה מוקדם).</p>
+
+      <h4>הסוכן עומד במלואו בנהלים</h4>
+      <p>במקרה שהסוכן עומד בכל הנהלים לאורך השיחה, הדו"ח מציג ציון גבוה והערכה חיובית, ללא אינדיקציית כשל.</p>
+
+      <h4>ניסיון מניפולציה מצד הפרסונה</h4>
+      <p>פרסונות כמו "עידן כרמון" (טוען שהובטח לו הכל) נועדו לבדוק אם הסוכן נכנע ללחץ/טענות לא מאומתות. אם הסוכן מספק מידע או הטבה בניגוד לנהלים בעקבות הלחץ, זה מסומן על ידי השופט כנקודת כשל מפורשת בהערכה הכתובה.</p>
+
+      <h4>שינוי נהלים לאחר תחילת הרצה</h4>
+      <p>עריכת הנהלים אינה חלה על הרצה שכבר החלה — היא משפיעה רק על הרצות עתידיות (הנחת עבודה, טעונה אימות מוצר).</p>
+
+      <h3>שלב 5 — מחוץ לסקופ</h3>
+      <ul>
+        <li><strong>יצירת פרסונות מותאמות אישית</strong> לא נתמכת בגרסה זו. קיימות 4 פרסונות קבועות בלבד. יצירת פרסונה מותאמת דורשת ממשק הגדרה נפרד (אופי, מטרה, תרחיש) שיישקל בגרסה עתידית.</li>
+        <li><strong>בדיקת כמה סוכני AI במקביל</strong> לא נתמכת. בגרסה זו נבדק סוכן יחיד. תמיכה בריבוי סוכנים דורשת מנגנון ניהול פרויקטים/סוכנים נפרד.</li>
+        <li><strong>אורך שיחה משתנה / מעבר ל-4 חילופי דברים</strong> לא נתמך בגרסה זו. אורך קבוע נבחר כברירת מחדל הפשוטה למימוש ולבדיקה ראשונית.</li>
+        <li><strong>תמיכה בערוצים נוספים מעבר לטקסט</strong> (קול, וואטסאפ וכו') לא נכללת בגרסה זו, כדי לפשט את המימוש הראשוני.</li>
+        <li><strong>הרצה מקבילה של כמה פרסונות באותה בדיקה</strong> לא נתמכת. כל הרצה מוגבלת לפרסונה אחת מול הסוכן. הרצת "חבילת בדיקות" מרובת פרסונות בבת אחת היא שיפור אפשרי בהמשך.</li>
+        <li><strong>דו"ח מרוכז/השוואתי בין הרצות</strong> (למשל מגמת ציון סוכן לאורך זמן) לא נכלל בגרסה זו — כל הרצה מציגה דו"ח עצמאי משלה.</li>
+        <li><strong>אינטגרציה עם מערכות תיקוב/ניהול משימות</strong> (כגון פתיחת טיקט אוטומטי לצוות הפיתוח כשמתגלה כשל) אינה נכללת. ה-MVP מסתפק בהצגת דו"ח בממשק; אינטגרציות כאלה יישקלו רק אם יתגלה צורך עסקי מובהק.</li>
+      </ul>
+
+      <h2>2. רשימת שאלות פתוחות</h2>
+
+      <h3>נמען: עסקי</h3>
+      <div class="q">
+        <p class="q-text">מהו מדד ההצלחה הרשמי שנרצה למדוד עבור הפלטפורמה?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>הגדרתי מדד הצלחה כהנחת עבודה בלבד. ללא אישור עסקי לא ברור אילו נתונים לאסוף ולדווח עליהם.</p>
+      </div>
+      <div class="q">
+        <p class="q-text">האם מתוכננת בעתיד הקרוב תמיכה בבדיקת כמה סוכני AI במקביל, או שהפלטפורמה תישאר ממוקדת בסוכן יחיד לזמן ממושך?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>משפיע על ארכיטקטורת הנתונים כבר עכשיו, גם אם לא בונים זאת ב-MVP.</p>
+      </div>
+      <div class="q">
+        <p class="q-text">מהו מודל העלות של הרצת שיחות ושיפוט מבוסס LLM (עלות טוקנים), והאם יש תקציב/מגבלה על כמות ההרצות?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>קובע אם נדרש מנגנון הגבלת שימוש כבר בגרסה הראשונה.</p>
+      </div>
+
+      <h3>נמען: מוצר</h3>
+      <div class="q">
+        <p class="q-text">מהו מספר חילופי הדברים והפרסונות הסביר בעיני משתמשים בפועל, מעבר לערכי ה-MVP (4 ו-4)?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>אלה ערכים משוערים שנקבעו לצורך גרסה ראשונית; בלי אימות אנחנו עלולים לבנות מגבלות שלא תואמות שימוש בפועל.</p>
+      </div>
+      <div class="q">
+        <p class="q-text">האם קיים צורך מיידי ביצירת פרסונות מותאמות אישית על ידי המשתמש, מעבר ל-4 הפרסונות הקבועות?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>משפיע על עדיפות הפיתוח לגרסה הבאה ועל מורכבות ממשק ההגדרה הנדרש.</p>
+      </div>
+      <div class="q">
+        <p class="q-text">מה חווית המשתמש הרצויה כשההרצה מזהה כשל חמור במיוחד (למשל דליפת מידע רגיש)? האם נדרשת התרעה מיידית ולא רק דו"ח בסיום?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>קובע אם נדרש מנגנון התרעה בזמן אמת מעבר לדו"ח הסיכום.</p>
+      </div>
+
+      <h3>נמען: פיתוח</h3>
+      <div class="q">
+        <p class="q-text">מה קורה אם הסוכן הנבדק אינו מגיב בזמן סביר באמצע שיחה?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>קובע אם נדרש מנגנון retry, כמה זמן להמתין, ואיך זה מדווח למשתמש בנפרד מכשל מדיניות.</p>
+      </div>
+      <div class="q">
+        <p class="q-text">כיצד נמנעת הטיה או "שכנוע" של שופט ה-AI על ידי תוכן השיחה עצמו (כגון prompt injection דרך הפרסונה או תגובת הסוכן)?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>משפיע על אמינות הציון וההערכה — ליבת הערך של המוצר.</p>
+      </div>
+
+      <h3>נמען: תפעול</h3>
+      <div class="q">
+        <p class="q-text">מי אחראי על עדכון ותחזוקת 4 הפרסונות הקיימות לאורך זמן (עדכון תרחישים, זיהוי פרסונות לא רלוונטיות)?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>קובע האם נדרש תהליך תפעולי שוטף לתחזוקת תוכן הפרסונות מעבר לפיתוח הראשוני.</p>
+      </div>
+      <div class="q">
+        <p class="q-text">כיצד מטפלים במקרה שבו השופט עצמו טועה בהערכה (למשל נותן ציון גבוה לשיחה בעייתית)? האם יש תהליך ביקורת אנושית?</p>
+        <p class="q-why"><span class="q-label">תלוי בזה:</span>משפיע על רמת האמון שניתן לתת לפלטפורמה כמקור אמת יחיד להחלטת שחרור.</p>
+      </div>
+
+    </article>
+  </div>
 </body>
 </html>
