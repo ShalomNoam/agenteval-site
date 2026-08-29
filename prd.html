@@ -11,7 +11,7 @@
   :root{
     --bg:#F2E6C9;
     --card:#FBF3DE;
-    --ink:#251D11;
+    --ink:#111111;
     --rule:#C9B48C;
     --accent:#B85C2E;
     --accent-dim:#8A4B24;
@@ -63,15 +63,14 @@
     align-items:center;
     gap:8px;
     text-decoration:none;
-    color:var(--accent-dim);
+    color:var(--ink);
     font-family:'JetBrains Mono', monospace;
     font-size:13px;
     letter-spacing:.04em;
     padding:8px 4px;
-    transition:color .25s ease, gap .25s ease;
+    transition:gap .25s ease;
   }
   .back:hover, .back:focus-visible{
-    color:var(--accent);
     gap:12px;
   }
 
@@ -132,7 +131,7 @@
     font-size:16px;
     letter-spacing:.01em;
     margin:28px 0 10px;
-    color:var(--accent-dim);
+    color:var(--ink);
   }
 
   article p{
@@ -156,7 +155,7 @@
     line-height:1.8;
   }
   article li::marker{
-    color:var(--accent-dim);
+    color:var(--ink);
   }
 
   article strong{
@@ -167,22 +166,10 @@
   .tag{
     font-family:'Assistant', sans-serif;
     font-weight:700;
-    color:var(--accent-dim);
+    color:var(--ink);
     unicode-bidi:isolate;
     white-space:nowrap;
     margin-inline-end:2px;
-  }
-
-  /* stage lead-in line */
-  .flow-note{
-    background:var(--card);
-    border:1px solid var(--rule);
-    border-radius:12px;
-    padding:16px 20px;
-    font-size:15.5px;
-    line-height:1.7;
-    color:var(--muted);
-    margin-bottom:24px;
   }
 
   /* open questions */
@@ -199,12 +186,12 @@
   .q-why{
     font-size:15px;
     line-height:1.7;
-    color:var(--muted);
+    color:var(--ink);
     margin-bottom:0 !important;
   }
   .q-label{
     font-weight:700;
-    color:var(--accent-dim);
+    color:var(--ink);
     margin-inline-end:6px;
   }
 
@@ -276,7 +263,7 @@
       <p>הצלחה נמדדת ביכולת הפלטפורמה לזהות בפועל נקודות כשל אמיתיות של הסוכן הנבדק לפני שחרורו ללקוחות, ובקיצור זמן מחזור הבדיקה (מימים לדקות) עבור צוות המוצר. מדד משני: כמות הרצות שהושלמו בהצלחה מקצה לקצה (משיחה ועד דו"ח) לעומת הרצות שנכשלו טכנית (למשל עקב תקלה בבוט הנבדק).</p>
 
       <h3>שלב 2 — הפלואו המרכזי</h3>
-      <p class="flow-note">הנחת יסוד לכל הפלואו: כל הרצה בודקת פרסונה אחת מול סוכן AI אחד, ומייצרת דו"ח יחיד בסיומה.</p>
+      <p>הנחת יסוד לכל הפלואו: כל הרצה בודקת פרסונה אחת מול סוכן AI אחד, ומייצרת דו"ח יחיד בסיומה.</p>
       <ol>
         <li><strong>הגדרת המדיניות/נהלים של הסוכן הנבדק</strong>: המשתמש מגדיר מראש (בטקסט חופשי, ניתן לעריכה) את הנהלים שהסוכן חייב לעמוד בהם, למשל "חובה לאמת זהות לפני חשיפת יתרה" עבור קלירקארד. הנהלים משויכים לסוכן הנבדק.</li>
         <li><strong>בחירת פרסונה</strong>: המשתמש בוחר פרסונה אחת מתוך 4 הפרסונות הקיימות במערכת (רועי אלמוג, VIP בלחץ זמן; מירב שגיא, לקוחה זועמת; יעקב פרידמן, לקוח מבולבל; עידן כרמון, טוען שהובטח לו הכל).</li>
