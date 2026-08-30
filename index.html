@@ -95,12 +95,8 @@
     line-height:1.8;
     letter-spacing:-.01em;
     color:var(--ink);
-    text-align:start;
-  }
-  /* nudge the subtitle toward the reading edge, only where there is slack beside it */
-  @media (min-width:600px){
-    :root[dir="rtl"] .sub{ transform:translateX(clamp(32px, 6vw, 96px)); }
-    :root[dir="ltr"] .sub{ transform:translateX(calc(-1 * clamp(32px, 6vw, 96px))); }
+    text-align:center;
+    text-wrap:balance;
   }
 
   nav.index{
