@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgentEval</title>
+<script>try{if(localStorage.getItem('agenteval_lang')==='en'){var d=document.documentElement;d.setAttribute('dir','ltr');d.setAttribute('lang','en');}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=Rubik:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -94,11 +95,12 @@
     line-height:1.8;
     letter-spacing:-.01em;
     color:var(--ink);
-    text-align:right;
+    text-align:start;
   }
-  /* nudge the subtitle rightward, only where there is slack beside it */
+  /* nudge the subtitle toward the reading edge, only where there is slack beside it */
   @media (min-width:600px){
-    .sub{ transform:translateX(clamp(32px, 6vw, 96px)); }
+    :root[dir="rtl"] .sub{ transform:translateX(clamp(32px, 6vw, 96px)); }
+    :root[dir="ltr"] .sub{ transform:translateX(calc(-1 * clamp(32px, 6vw, 96px))); }
   }
 
   nav.index{
@@ -217,9 +219,9 @@
 </head>
 <body>
   <div class="wrap">
-    <header dir="ltr">
-      <h1>AgentEval</h1>
-      <p class="sub" dir="rtl">סוכן AI שמדמה לקוחות אמיתיים לבדיקה, ניטור וייעול של צ'אטבוטים.<br>בפרויקט בוט של חברת אשראי עם אפשרות בדיקה ידנית / אוטומטית</p>
+    <header>
+      <h1 dir="ltr">AgentEval</h1>
+      <p class="sub" data-i18n="index.sub">סוכן AI שמדמה לקוחות אמיתיים לבדיקה, ניטור וייעול של צ'אטבוטים.<br>בפרויקט בוט של חברת אשראי עם אפשרות בדיקה ידנית / אוטומטית</p>
     </header>
 
     <nav class="index" dir="ltr">
@@ -265,5 +267,6 @@
       </div>
     </nav>
   </div>
+<script src="i18n.js" defer></script>
 </body>
 </html>

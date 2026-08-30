@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research · AgentEval</title>
+<script>try{if(localStorage.getItem('agenteval_lang')==='en'){var d=document.documentElement;d.setAttribute('dir','ltr');d.setAttribute('lang','en');}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -139,7 +140,7 @@
       <h1 dir="ltr">Research</h1>
     </header>
 
-    <article>
+    <article data-i18n-scope="research">
       <p>בשנים האחרונות סוכני בינה מלאכותית עברו ממעמד של כלי ניסיוני למערכות שמדברות ישירות עם לקוחות אמיתיים, בתחומים כמו שירות לקוחות, בנקאות ומסחר. המעבר הזה חושף בעיה שלא הייתה קיימת באותה חומרה כשמדובר היה בתוכנה קלאסית. בוט מבוסס מודל שפה לא פועל לפי חוקים קשיחים וצפויים, אלא מייצר תגובות בצורה גמישה בכל שיחה מחדש, ולכן אי אפשר לבדוק אותו רק באמצעות מבחני יחידה מסורתיים. הבדיקה חייבת לכסות טווח עצום של דרכים אפשריות שבהן משתמש עלול לנסח בקשה, לטעות, להפעיל לחץ או אפילו לנסות לתמרן את המערכת כדי לעקוף מדיניות.</p>
 
       <p>הגישה המסורתית לבעיה הזו הייתה בדיקה ידנית, שבה צוות אנושי כותב מאות תרחישים אפשריים ומריץ אותם שוב ושוב מול הבוט. השיטה הזו איטית, יקרה ולא ניתנת לקנה מידה. לפי ניתוחים בתחום, כדי להגיע לכיסוי שמודל שיפוט אוטומטי מספק במהלך לילה אחד, נדרש צוות של עשרות בודקים אנושיים שיעבדו במקביל במשך יום שלם.</p>
@@ -155,9 +156,10 @@
       <p>התפתחות נוספת בתחום היא המעבר מהערכה חד ממדית של תשובה בודדת, להערכה של סוכן שלם לאורך תהליך, כולל הבחירות שהוא עושה, השימוש בכלים והדרך שבה הוא מגיע לתשובה. גישה כזו נדרשת כי סוכן יכול להצליח במשימה דרך נתיב בזבזני או שגוי, או לבצע קריאות לכלים בהצלחה טכנית אך עדיין לא לענות בפועל על מה שהמשתמש רצה. בהקשר הזה, סקרים על אימוץ הגישה בתעשייה מדווחים כי כתשעים ושניים אחוז מהצוותים שמפתחים מוצרי בינה מלאכותית כבר משלבים היום הערכה אוטומטית כלשהי בתהליך הפיתוח השוטף שלהם, מה שמעיד על כך שהמעבר משיפוט אנושי לשיפוט מבוסס מודל שפה הוא כבר לא כיוון עתידי אלא מגמה מבוססת בתעשייה.</p>
     </article>
 
-    <p class="source">
+    <p class="source" data-i18n="research.src">
       מקור: <a href="https://www.confident-ai.com/blog/why-llm-as-a-judge-is-the-best-llm-evaluation-method" target="_blank" rel="noopener noreferrer" dir="ltr">Why LLM-as-a-Judge is the Best LLM Evaluation Method — Confident AI</a>
     </p>
   </div>
+<script src="i18n.js" defer></script>
 </body>
 </html>
