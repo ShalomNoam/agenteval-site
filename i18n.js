@@ -53,12 +53,10 @@
     "about.b7": "Thanks so much for your time!",
 
     /* ---------- prd: success-metric illustration ---------- */
-    "viz.before": "Before",
-    "viz.beforeVal": "days",
-    "viz.beforeSub": "manual testing cycle",
-    "viz.after": "After",
-    "viz.afterVal": "minutes",
-    "viz.afterSub": "with AgentEval",
+    "viz.manual": "Manual testing cycle",
+    "viz.auto": "Automated cycle (AgentEval)",
+    "viz.axisCoverage": "Test coverage",
+    "viz.axisTime": "Time",
     "viz.tag": "example",
     "viz.disclaimer": "For illustration only — final values will be set after business approval.",
 
