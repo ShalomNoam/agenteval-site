@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Demo · AgentEval</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FCFBF8;
+    --bg:#f8f8fc;
     --bg-hi:#FFFFFF;
-    --bg-lo:#F1EADB;
-    --ink:#1B2A47;
-    --rule:#D8C8AB;
-    --accent:#2E4E86;
-    --accent-dim:#3C568A;
+    --bg-lo:#f1f1fa;
+    --ink:#12162a;
+    --rule:#e6e6f2;
+    --accent:#8a93f0;
+    --accent-dim:#6b7386;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;}
@@ -23,7 +23,7 @@
     background-image:linear-gradient(176deg, var(--bg-hi) 0%, var(--bg) 42%, var(--bg-lo) 100%);
     background-attachment:fixed;
     color:var(--ink);
-    font-family:'Assistant',sans-serif;
+    font-family:'IBM Plex Sans Hebrew', 'Archivo', sans-serif;
     min-height:100vh;
     display:flex;
     flex-direction:column;
@@ -41,20 +41,20 @@
     gap:8px;
     text-decoration:none;
     color:var(--accent-dim);
-    font-family:'JetBrains Mono', monospace;
+    font-family:'IBM Plex Mono', monospace;
     font-size:13px;
     letter-spacing:.04em;
   }
   .back:hover{ color:var(--accent); }
   h1{
-    font-family:'Frank Ruhl Libre', serif;
-    font-weight:900;
+    font-family:'Archivo', 'IBM Plex Sans Hebrew', sans-serif;
+    font-weight:800;
     font-size:clamp(30px, 5vw, 44px);
     direction:ltr;
   }
   p{
     margin-top:14px;
-    color:#5A6B88;
+    color:#6b7386;
     font-size:16px;
   }
 </style>

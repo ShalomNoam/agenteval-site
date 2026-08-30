@@ -6,17 +6,19 @@
 <title>About Me · AgentEval</title>
 <script>try{if(localStorage.getItem('agenteval_lang')==='en'){var d=document.documentElement;d.setAttribute('dir','ltr');d.setAttribute('lang','en');var s=document.createElement('style');s.id='i18n-cloak';s.textContent='[data-i18n],[data-i18n-scope]{visibility:hidden}';(document.head||d).appendChild(s);setTimeout(function(){var c=document.getElementById('i18n-cloak');if(c&&c.parentNode)c.parentNode.removeChild(c);},1500);}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FCFBF8;
+    --bg:#f8f8fc;
     --bg-hi:#FFFFFF;
-    --bg-lo:#F1EADB;
-    --card:#EFE7D5;
-    --ink:#1B2A47;
-    --rule:#D8C8AB;
-    --accent:#2E4E86;
-    --accent-dim:#3C568A;
+    --bg-lo:#f1f1fa;
+    --card:#ffffff;
+    --panel-2:#fbfbfe;
+    --brand-light:#c7cfff;
+    --ink:#12162a;
+    --rule:#e6e6f2;
+    --accent:#8a93f0;
+    --accent-dim:#6b7386;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -27,7 +29,7 @@
     background-image:linear-gradient(176deg, var(--bg-hi) 0%, var(--bg) 42%, var(--bg-lo) 100%);
     background-attachment:fixed;
     color:var(--ink);
-    font-family:'Assistant',sans-serif;
+    font-family:'IBM Plex Sans Hebrew', 'Archivo', sans-serif;
     min-height:100vh;
     position:relative;
     overflow-x:hidden;
@@ -39,7 +41,7 @@
     position:fixed;
     inset:0;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
-    opacity:.06;
+    opacity:.035;
     mix-blend-mode:multiply;
     pointer-events:none;
     z-index:0;
@@ -48,7 +50,7 @@
     content:"";
     position:fixed;
     inset:0;
-    background:radial-gradient(circle at 50% 28%, transparent 0%, transparent 40%, rgba(20,28,50,.05) 100%);
+    background:radial-gradient(circle at 50% 28%, transparent 0%, transparent 40%, rgba(18,22,42,.04) 100%);
     pointer-events:none;
     z-index:0;
   }
@@ -67,7 +69,7 @@
     gap:8px;
     text-decoration:none;
     color:var(--accent-dim);
-    font-family:'JetBrains Mono', monospace;
+    font-family:'IBM Plex Mono', monospace;
     font-size:13px;
     letter-spacing:.04em;
     padding:8px 4px;
@@ -85,8 +87,8 @@
   }
 
   h1{
-    font-family:'Frank Ruhl Libre', serif;
-    font-weight:900;
+    font-family:'Archivo', 'IBM Plex Sans Hebrew', sans-serif;
+    font-weight:800;
     font-size:clamp(32px, 5.5vw, 46px);
     line-height:1.2;
     direction:ltr;
