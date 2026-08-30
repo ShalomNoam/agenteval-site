@@ -57,8 +57,6 @@
     "viz.auto": "Automated cycle (AgentEval)",
     "viz.axisCoverage": "Test coverage",
     "viz.axisTime": "Time",
-    "viz.tag": "example",
-    "viz.disclaimer": "For illustration only — final values will be set after business approval.",
 
     /* ---------- prd ---------- */
     "prd.h1": "Product Requirements Document (PRD)",
