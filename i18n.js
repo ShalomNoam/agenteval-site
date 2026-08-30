@@ -52,6 +52,16 @@
     "about.b6": "Here's my <a href=\"https://www.linkedin.com/in/noam-shalom-/\" target=\"_blank\" rel=\"noopener noreferrer\" dir=\"ltr\">LinkedIn</a>.",
     "about.b7": "Thanks so much for your time!",
 
+    /* ---------- prd: success-metric illustration ---------- */
+    "viz.before": "Before",
+    "viz.beforeVal": "days",
+    "viz.beforeSub": "manual testing cycle",
+    "viz.after": "After",
+    "viz.afterVal": "minutes",
+    "viz.afterSub": "with AgentEval",
+    "viz.tag": "example",
+    "viz.disclaimer": "For illustration only — final values will be set after business approval.",
+
     /* ---------- prd ---------- */
     "prd.h1": "Product Requirements Document (PRD)",
     "prd.b1": "Why LLM-as-a-Judge and not something simpler?",

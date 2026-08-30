@@ -17,8 +17,10 @@
     --panel-2:#fbfbfe;
     --brand-light:#c7cfff;
     --ink:#12162a;
+    --text-dim:#454e66;
     --rule:#e6e6f2;
     --accent:#8a93f0;
+    --brand-deep:#6b74d6;
     --accent-dim:#6b7386;
     --muted:#6b7386;
   }
@@ -207,6 +209,102 @@
   @media (max-width:560px){
     article{ font-size:16px; line-height:1.85; }
   }
+
+  /* ---- success-metric illustration: manual test cycle "days -> minutes" ---- */
+  .cycle-viz{
+    margin:22px 0 24px;
+    padding:20px;
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:12px;
+    box-shadow:0 1px 2px rgba(18,22,42,.04), 0 12px 24px rgba(18,22,42,.07);
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:stretch;
+    gap:12px;
+    animation:cvIn .5s cubic-bezier(.16,1,.3,1) both;
+  }
+  @keyframes cvIn{ from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
+
+  .cv-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:6px;
+    padding:16px 12px;
+    border-radius:10px;
+  }
+  .cv-before{ background:var(--bg-lo); }
+  .cv-after{ background:var(--card); border:1px solid var(--accent); }
+
+  .cv-ico{ display:flex; }
+  .cv-ico svg{ width:24px; height:24px; }
+  .cv-before .cv-ico{ color:var(--text-dim); }
+  .cv-after .cv-ico{ color:var(--brand-deep); }
+
+  .cv-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .cv-value{
+    font-family:'Archivo', 'IBM Plex Sans Hebrew', sans-serif;
+    font-weight:800;
+    font-size:clamp(22px, 5vw, 30px);
+    line-height:1;
+  }
+  .cv-before .cv-value{ color:var(--text-dim); }
+  .cv-after .cv-value{ color:var(--brand-deep); }
+  .cv-sub{ font-size:12px; line-height:1.4; color:var(--text-dim); }
+
+  .cv-arrow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--text-dim);
+  }
+  .cv-arrow svg{ width:22px; height:22px; }
+  :root[dir="rtl"] .cv-arrow svg{ transform:scaleX(-1); }
+
+  .cv-note{
+    grid-column:1 / -1;
+    margin-top:4px;
+    padding-top:12px;
+    border-top:1px solid var(--rule);
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+    font-size:12px;
+    line-height:1.5;
+    color:var(--text-dim);
+  }
+  .cv-tag{
+    flex-shrink:0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:var(--brand-light);
+    border:1px solid var(--accent);
+    padding:3px 8px;
+    border-radius:999px;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .cycle-viz{ animation:none; }
+  }
+  @media (max-width:560px){
+    .cycle-viz{ grid-template-columns:1fr; }
+    .cv-arrow svg,
+    :root[dir="rtl"] .cv-arrow svg{ transform:rotate(90deg); }
+  }
 </style>
 </head>
 <body>
@@ -270,6 +368,28 @@
       <h4>מדד הצלחה מרכזי</h4>
       <p class="assumption">(לא הוגדר רשמית על ידי הצד העסקי, אך נדרש לצורך מיקוד המוצר)</p>
       <p>הצלחה נמדדת ביכולת הפלטפורמה לזהות בפועל נקודות כשל אמיתיות של הסוכן הנבדק לפני שחרורו ללקוחות, ובקיצור זמן מחזור הבדיקה (מימים לדקות) עבור צוות המוצר. מדד משני: כמות הרצות שהושלמו בהצלחה מקצה לקצה (משיחה ועד דו"ח) לעומת הרצות שנכשלו טכנית (למשל עקב תקלה בבוט הנבדק).</p>
+
+      <figure class="cycle-viz">
+        <div class="cv-card cv-before">
+          <span class="cv-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+          <span class="cv-label" data-i18n="viz.before">לפני</span>
+          <span class="cv-value" data-i18n="viz.beforeVal">ימים</span>
+          <span class="cv-sub" data-i18n="viz.beforeSub">מחזור בדיקה ידני</span>
+        </div>
+        <div class="cv-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="cv-card cv-after">
+          <span class="cv-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 11 14 9 22 21 10 13 10 13 2"/></svg></span>
+          <span class="cv-label" data-i18n="viz.after">אחרי</span>
+          <span class="cv-value" data-i18n="viz.afterVal">דקות</span>
+          <span class="cv-sub" data-i18n="viz.afterSub">עם AgentEval</span>
+        </div>
+        <figcaption class="cv-note">
+          <span class="cv-tag" data-i18n="viz.tag">לדוגמה</span>
+          <span data-i18n="viz.disclaimer">להמחשה בלבד — הערכים הסופיים ייקבעו לאחר אישור עסקי.</span>
+        </figcaption>
+      </figure>
 
       <h3>שלב 2 — הפלואו המרכזי</h3>
       <p>הנחת יסוד לכל הפלואו: כל הרצה בודקת פרסונה אחת מול סוכן AI אחד, ומייצרת דו"ח יחיד בסיומה.</p>
