@@ -7,6 +7,7 @@
   "use strict";
   var LANG_KEY = "agenteval_lang";
   var DEFAULT_LANG = "he";
+  var currentLang = DEFAULT_LANG;
 
   /* Elements marked data-i18n-scope get sequential keys (<scope>.b1, .b2 …)
      assigned to every heading / paragraph / list-item inside them, in DOM
@@ -188,6 +189,7 @@
   }
 
   function applyLang(lang) {
+    currentLang = lang;
     var root = document.documentElement;
     root.setAttribute("lang", lang);
     root.setAttribute("dir", lang === "he" ? "rtl" : "ltr");
@@ -207,26 +209,41 @@
       he.setAttribute("aria-pressed", lang === "he");
       en.setAttribute("aria-pressed", lang === "en");
     }
+    moveThumb();
 
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
   }
 
+  // Slide the dark pill under whichever label is active. The עב / EN labels
+  // themselves keep a fixed left-to-right order (the switch is forced LTR).
+  function moveThumb() {
+    var thumb = document.querySelector(".lang-thumb");
+    var active = document.getElementById(currentLang === "he" ? "lang-he" : "lang-en");
+    if (!thumb || !active) return;
+    thumb.style.left = active.offsetLeft + "px";
+    thumb.style.width = active.offsetWidth + "px";
+  }
+
   function injectSwitch() {
     var css =
-      /* fixed at the physical top-left, in both languages — never shifts side to side */
-      ".lang-switch{position:fixed;top:14px;left:14px;z-index:60;" +
-      "display:inline-flex;gap:2px;padding:3px;border-radius:999px;" +
+      /* fixed at the physical top-left in both languages; direction:ltr keeps
+         the עב / EN labels in a fixed order — only the dark pill slides. */
+      ".lang-switch{position:fixed;top:14px;left:14px;z-index:60;direction:ltr;" +
+      "display:inline-flex;gap:2px;padding:4px;border-radius:999px;" +
       "background:var(--card,#EFE7D5);border:1px solid var(--rule,#D8C8AB);" +
       "box-shadow:0 2px 10px rgba(20,28,50,.14);}" +
-      ".lang-switch button{appearance:none;border:0;cursor:pointer;background:transparent;" +
-      "font:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;line-height:1;" +
-      "color:var(--ink,#1B2A47);padding:6px 12px;border-radius:999px;" +
-      "transition:background .2s ease,color .2s ease;}" +
-      ".lang-switch button.active{background:var(--ink,#1B2A47);color:var(--bg,#FCFBF8);}" +
-      "@media (prefers-reduced-motion:reduce){.lang-switch button{transition:none;}}" +
-      "@media (max-width:640px){.back{margin-top:26px;}}" +
+      ".lang-thumb{position:absolute;top:4px;bottom:4px;left:4px;width:0;" +
+      "border-radius:999px;background:var(--ink,#1B2A47);z-index:0;" +
+      "transition:left .3s cubic-bezier(.22,1,.36,1),width .3s cubic-bezier(.22,1,.36,1);}" +
+      ".lang-switch button{position:relative;z-index:1;appearance:none;border:0;cursor:pointer;" +
+      "background:transparent;font:inherit;font-size:13.5px;font-weight:700;letter-spacing:.02em;" +
+      "line-height:1;color:var(--ink,#1B2A47);padding:8px 15px;border-radius:999px;" +
+      "transition:color .25s ease;}" +
+      ".lang-switch button.active{color:var(--bg,#FCFBF8);}" +
+      "@media (prefers-reduced-motion:reduce){.lang-thumb,.lang-switch button{transition:none;}}" +
+      "@media (max-width:640px){.back{margin-top:28px;}}" +
       "@media (max-width:560px){.lang-switch{top:10px;left:10px;}" +
-      ".lang-switch button{padding:5px 10px;font-size:11px;}}";
+      ".lang-switch button{padding:7px 13px;font-size:12.5px;}}";
     var style = document.createElement("style");
     style.textContent = css;
     document.head.appendChild(style);
@@ -236,6 +253,7 @@
     wrap.setAttribute("role", "group");
     wrap.setAttribute("aria-label", "Language / שפה");
     wrap.innerHTML =
+      '<span class="lang-thumb" aria-hidden="true"></span>' +
       '<button id="lang-he" type="button" lang="he">עב</button>' +
       '<button id="lang-en" type="button" lang="en">EN</button>';
     document.body.appendChild(wrap);
@@ -248,9 +266,28 @@
     expandScopes();
     captureHe();
     injectSwitch();
+
     var saved = DEFAULT_LANG;
     try { saved = localStorage.getItem(LANG_KEY) || DEFAULT_LANG; } catch (e) {}
+
+    // First positioning must not animate from the default spot.
+    var thumb = document.querySelector(".lang-thumb");
+    if (thumb) thumb.style.transition = "none";
     applyLang(saved === "en" ? "en" : "he");
+
+    // Reveal the content the head-cloak hid to prevent a Hebrew flash for EN visitors.
+    var cloak = document.getElementById("i18n-cloak");
+    if (cloak) cloak.parentNode.removeChild(cloak);
+
+    // Re-measure once webfonts have loaded (they change button widths), then
+    // hand control of the pill back to the CSS transition.
+    if (thumb) {
+      requestAnimationFrame(function () { thumb.style.transition = ""; });
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(moveThumb);
+      }
+    }
+    window.addEventListener("resize", moveThumb);
   }
 
   if (document.readyState === "loading") {
