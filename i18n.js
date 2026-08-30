@@ -213,7 +213,8 @@
 
   function injectSwitch() {
     var css =
-      ".lang-switch{position:fixed;top:14px;inset-inline-end:14px;z-index:60;" +
+      /* fixed at the physical top-left, in both languages — never shifts side to side */
+      ".lang-switch{position:fixed;top:14px;left:14px;z-index:60;" +
       "display:inline-flex;gap:2px;padding:3px;border-radius:999px;" +
       "background:var(--card,#EFE7D5);border:1px solid var(--rule,#D8C8AB);" +
       "box-shadow:0 2px 10px rgba(20,28,50,.14);}" +
@@ -223,7 +224,8 @@
       "transition:background .2s ease,color .2s ease;}" +
       ".lang-switch button.active{background:var(--ink,#1B2A47);color:var(--bg,#FCFBF8);}" +
       "@media (prefers-reduced-motion:reduce){.lang-switch button{transition:none;}}" +
-      "@media (max-width:560px){.lang-switch{top:10px;inset-inline-end:10px;}" +
+      "@media (max-width:640px){.back{margin-top:26px;}}" +
+      "@media (max-width:560px){.lang-switch{top:10px;left:10px;}" +
       ".lang-switch button{padding:5px 10px;font-size:11px;}}";
     var style = document.createElement("style");
     style.textContent = css;
