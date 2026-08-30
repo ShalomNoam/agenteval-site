@@ -98,6 +98,9 @@
     text-align:center;
     text-wrap:balance;
   }
+  /* English reads left-to-right: left-align it so every line shares one edge,
+     and drop the width cap so each sentence stays on its own line where it fits */
+  :root[dir="ltr"] .sub{ text-align:left; max-width:none; text-wrap:wrap; }
 
   nav.index{
     display:flex;
@@ -217,7 +220,7 @@
   <div class="wrap">
     <header>
       <h1 dir="ltr">AgentEval</h1>
-      <p class="sub" data-i18n="index.sub">סוכן AI שמדמה לקוחות אמיתיים לבדיקה, ניטור וייעול של צ'אטבוטים.<br>בפרויקט בוט של חברת אשראי עם אפשרות בדיקה ידנית / אוטומטית</p>
+      <p class="sub" data-i18n="index.sub">סוכן AI שמדמה לקוחות אמיתיים לבדיקה, ניטור וייעול של צ'אטבוטים.<br>בפרויקט בוט של חברת אשראי עם אפשרות בדיקה ידנית&nbsp;/&nbsp;אוטומטית</p>
     </header>
 
     <nav class="index" dir="ltr">

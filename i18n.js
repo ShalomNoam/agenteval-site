@@ -17,7 +17,7 @@
   var EN = {
     /* ---------- index ---------- */
     "index.sub":
-      "An AI agent that simulates real customers to test, monitor, and streamline chatbots.<br>In this project: a credit-card company bot, with a manual / automatic testing option.",
+      "An AI agent that simulates real customers to test, monitor, and streamline chatbots.<br>In this project: a credit-card company bot with a manual / automatic testing option.",
 
     /* ---------- problem ---------- */
     "problem.b1": "Teams today build AI agents that are genuinely impressive in what they can do.",
