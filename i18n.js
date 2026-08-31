@@ -259,8 +259,9 @@
       ".lang-switch button.active{color:var(--ink,#12162a);}" +
       "@media (prefers-reduced-motion:reduce){.lang-thumb,.lang-switch button{transition:none;}}" +
       "@media (max-width:640px){.back{margin-top:28px;}}" +
-      "@media (max-width:560px){.lang-switch{top:10px;left:10px;}" +
-      ".lang-switch button{padding:7px 13px;font-size:12.5px;}}";
+      "@media (max-width:560px){.lang-switch{top:10px;left:10px;padding:3px;}" +
+      ".lang-thumb{top:3px;bottom:3px;}" +
+      ".lang-switch button{padding:6px 10px;font-size:12px;}}";
     var style = document.createElement("style");
     style.textContent = css;
     document.head.appendChild(style);
