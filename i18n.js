@@ -53,7 +53,7 @@
     "about.b7": "Thanks so much for your time!",
 
     /* ---------- prd: core-flow figure ---------- */
-    "flow.kicker": "The agent testing cycle",
+    "flow.kicker": "Flowchart",
     "flow.t1": "Define the rules",
     "flow.d1": "The tested agent's policy, as free editable text.",
     "flow.t2": "Choose a persona",
@@ -64,7 +64,6 @@
     "flow.d4": "The transcript is analyzed against the Step 01 rules.",
     "flow.t5": "Produce a report",
     "flow.d5": "A numeric score, a written assessment, and a failure point if any.",
-    "flow.fail": "failure point in transcript",
     "flow.t6": "Start a new run",
     "flow.d6": "The same persona or a different one. Back to Step 02.",
     "flow.loop": "From Step 06 you return to Step 02, with the same persona or a different one.",
