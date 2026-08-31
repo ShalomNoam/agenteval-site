@@ -52,11 +52,22 @@
     "about.b6": "Here's my <a href=\"https://www.linkedin.com/in/noam-shalom-/\" target=\"_blank\" rel=\"noopener noreferrer\" dir=\"ltr\">LinkedIn</a>.",
     "about.b7": "Thanks so much for your time!",
 
-    /* ---------- prd: success-metric illustration ---------- */
-    "viz.manual": "Manual testing cycle",
-    "viz.auto": "Automated cycle (AgentEval)",
-    "viz.axisCoverage": "Test coverage",
-    "viz.axisTime": "Time",
+    /* ---------- prd: core-flow figure ---------- */
+    "flow.kicker": "The agent testing cycle",
+    "flow.t1": "Define the rules",
+    "flow.d1": "The tested agent's policy, as free editable text.",
+    "flow.t2": "Choose a persona",
+    "flow.d2": "One of four fixed personas in the system.",
+    "flow.t3": "Run the conversation",
+    "flow.d3": "Four real-time exchanges, unscripted.",
+    "flow.t4": "AI judging",
+    "flow.d4": "The transcript is analyzed against the Step 01 rules.",
+    "flow.t5": "Produce a report",
+    "flow.d5": "A numeric score, a written assessment, and a failure point if any.",
+    "flow.fail": "failure point in transcript",
+    "flow.t6": "Start a new run",
+    "flow.d6": "The same persona or a different one. Back to Step 02.",
+    "flow.loop": "From Step 06 you return to Step 02, with the same persona or a different one.",
 
     /* ---------- prd ---------- */
     "prd.h1": "Product Requirements Document (PRD)",

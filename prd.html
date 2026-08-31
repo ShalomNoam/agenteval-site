@@ -210,54 +210,117 @@
     article{ font-size:16px; line-height:1.85; }
   }
 
-  /* ---- success-metric illustration: test-coverage over time, manual vs automated ---- */
-  .cycle-viz{
-    margin:22px 0 24px;
-    padding:18px 20px;
+  /* ---- core-flow figure: six floating step cards + a return loop ---- */
+  @keyframes cvIn{ from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
+
+  .flow-fig{
+    margin:26px 0 30px;
+    --ff-card-h:126px;
+    --ff-gap:26px;
+    --ff-step:calc(var(--ff-card-h) + var(--ff-gap));
+  }
+  .ff-kicker{
+    font:500 12.5px/1.4 'IBM Plex Mono', monospace;
+    letter-spacing:.04em;
+    color:var(--text-dim);
+    margin-bottom:14px;
+  }
+  .ff-deck{ position:relative; padding-left:44px; }   /* left strip for the return loop */
+  .ff-cards{ display:flex; flex-direction:column; }
+
+  .ff-card{
     background:var(--card);
     border:1px solid var(--rule);
     border-radius:12px;
     box-shadow:0 1px 2px rgba(18,22,42,.04), 0 12px 24px rgba(18,22,42,.07);
-    animation:cvIn .5s cubic-bezier(.16,1,.3,1) both;
-  }
-  @keyframes cvIn{ from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
-
-  .cv-legend{
+    padding:15px 18px;
+    height:var(--ff-card-h);
     display:flex;
-    flex-wrap:wrap;
-    gap:6px 18px;
-    margin-bottom:4px;
-    font-size:12.5px;
-    color:var(--text-dim);
+    flex-direction:column;
+    gap:4px;
+    animation:cvIn .5s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:calc(var(--i, 0) * .05s);
   }
-  .cv-key{ display:inline-flex; align-items:center; gap:8px; }
-  .cv-swatch{ width:16px; height:3px; border-radius:2px; flex-shrink:0; }
-  .cv-swatch-manual{ background:var(--text-dim); }
-  .cv-swatch-auto{ background:var(--brand-deep); height:4px; }
+  .ff-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:2px; }
+  .ff-num{
+    font:500 12.5px 'IBM Plex Mono', monospace;
+    letter-spacing:.08em;
+    color:var(--accent-dim);
+  }
+  .ff-flag{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font:500 11px/1 'IBM Plex Sans Hebrew', sans-serif;
+    color:#c02a2f;
+    white-space:nowrap;
+  }
+  .ff-flag svg{ width:13px; height:13px; flex-shrink:0; }
+  .ff-icon{
+    width:32px; height:32px;
+    border-radius:9px;
+    display:grid; place-items:center;
+    background:#eef0fc;
+    background:color-mix(in srgb, var(--accent) 9%, #fff);
+    border:1px solid var(--rule);
+    color:var(--brand-deep);
+    flex-shrink:0;
+  }
+  .ff-icon svg{ width:18px; height:18px; display:block; }
+  .ff-title{
+    font:700 18px/1.3 'Archivo', 'IBM Plex Sans Hebrew', sans-serif;
+    color:var(--ink);
+    display:block;
+  }
+  .ff-desc{
+    font:400 13.5px/1.5 'IBM Plex Sans Hebrew', sans-serif;
+    color:var(--muted);
+    display:block;
+  }
 
-  .cv-plot{ position:relative; direction:ltr; padding:18px 2px 20px; }
-  .cv-plot svg{ display:block; width:100%; height:auto; }
-  .cv-grid{ stroke:var(--rule); stroke-width:1; }
-  .cv-axis{ stroke:var(--rule); stroke-width:1.25; }
-  .cv-area-manual{ fill:var(--text-dim); opacity:.08; }
-  .cv-area-auto{ fill:var(--brand-deep); opacity:.10; }
-  .cv-line-manual{ fill:none; stroke:var(--text-dim); stroke-width:2; stroke-linecap:round; }
-  .cv-line-auto{ fill:none; stroke:var(--brand-deep); stroke-width:2.5; stroke-linecap:round; }
-  .cv-dot-manual{ fill:var(--text-dim); }
-  .cv-dot-auto{ fill:var(--brand-deep); }
+  .ff-link{ height:var(--ff-gap); display:grid; place-items:center; color:var(--accent); }
+  .ff-link svg{ width:14px; height:14px; display:block; }
 
-  .cv-lab{
+  /* return path: 06 -> 02, in the left strip */
+  .ff-loop{
     position:absolute;
-    font:10px/1 'IBM Plex Mono', monospace;
-    color:var(--text-dim);
-    pointer-events:none;
+    left:3px;
+    top:calc(var(--ff-step) + var(--ff-card-h) / 2);
+    height:calc(var(--ff-step) * 4);
+    width:26px;
+    border:2px solid var(--accent);
+    border-right:none;
+    border-radius:14px 0 0 14px;
   }
-  .cv-lab-y{ top:0; inset-inline-start:0; }
-  .cv-lab-zero{ bottom:20px; inset-inline-start:0; }
-  .cv-lab-x{ bottom:2px; left:50%; transform:translateX(-50%); }
+  .ff-arrow{
+    position:absolute;
+    left:24px;
+    top:calc(var(--ff-step) + var(--ff-card-h) / 2);
+    transform:translateY(-50%);
+  }
 
+  .ff-cap{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-top:18px;
+    padding-left:44px;
+    font:400 13px/1.6 'IBM Plex Sans Hebrew', sans-serif;
+    color:var(--text-dim);
+  }
+  .ff-cap .ff-rc{ color:var(--accent); flex-shrink:0; transform:translateY(3px); }
+  .ff-cap .ff-rc svg{ width:14px; height:14px; display:block; }
+
+  @media (max-width:560px){
+    .flow-fig{ --ff-card-h:120px; --ff-gap:22px; }
+    .ff-deck, .ff-cap{ padding-left:34px; }
+    .ff-title{ font-size:17px; }
+  }
+  @media (max-width:460px){
+    .ff-flag span{ display:none; }   /* keep the alert mark, drop the label when cramped */
+  }
   @media (prefers-reduced-motion:reduce){
-    .cycle-viz{ animation:none; }
+    .ff-card{ animation:none; }
   }
 </style>
 </head>
@@ -323,28 +386,83 @@
       <p class="assumption">(לא הוגדר רשמית על ידי הצד העסקי, אך נדרש לצורך מיקוד המוצר)</p>
       <p>הצלחה נמדדת ביכולת הפלטפורמה לזהות בפועל נקודות כשל אמיתיות של הסוכן הנבדק לפני שחרורו ללקוחות, ובקיצור זמן מחזור הבדיקה (מימים לדקות) עבור צוות המוצר. מדד משני: כמות הרצות שהושלמו בהצלחה מקצה לקצה (משיחה ועד דו"ח) לעומת הרצות שנכשלו טכנית (למשל עקב תקלה בבוט הנבדק).</p>
 
-      <figure class="cycle-viz">
-        <div class="cv-legend">
-          <span class="cv-key"><i class="cv-swatch cv-swatch-manual" aria-hidden="true"></i><span data-i18n="viz.manual">מחזור בדיקה ידני</span></span>
-          <span class="cv-key"><i class="cv-swatch cv-swatch-auto" aria-hidden="true"></i><span data-i18n="viz.auto">מחזור אוטומטי (AgentEval)</span></span>
-        </div>
-        <div class="cv-plot">
-          <span class="cv-lab cv-lab-y" data-i18n="viz.axisCoverage">כיסוי בדיקה</span>
-          <span class="cv-lab cv-lab-zero">0</span>
-          <span class="cv-lab cv-lab-x" data-i18n="viz.axisTime">זמן</span>
-          <svg viewBox="0 0 320 150" aria-hidden="true">
-            <line class="cv-grid" x1="28" y1="12" x2="312" y2="12" stroke-dasharray="3 4"/>
-            <line class="cv-grid" x1="28" y1="70" x2="312" y2="70"/>
-            <path class="cv-area-manual" d="M28 128 C 96 110, 196 66, 312 18 L312 128 Z"/>
-            <path class="cv-area-auto" d="M28 128 C 52 120, 82 46, 116 26 C 176 14, 244 11, 312 10 L312 128 Z"/>
-            <path class="cv-line-manual" d="M28 128 C 96 110, 196 66, 312 18"/>
-            <path class="cv-line-auto" d="M28 128 C 52 120, 82 46, 116 26 C 176 14, 244 11, 312 10"/>
-            <circle class="cv-dot-auto" cx="116" cy="26" r="3.4"/>
-            <circle class="cv-dot-manual" cx="312" cy="18" r="3.4"/>
-            <line class="cv-axis" x1="28" y1="12" x2="28" y2="128"/>
-            <line class="cv-axis" x1="28" y1="128" x2="312" y2="128"/>
+      <figure class="flow-fig">
+        <div class="ff-kicker" data-i18n="flow.kicker">מחזור בדיקת הסוכן</div>
+        <div class="ff-deck">
+          <div class="ff-cards" role="list">
+
+            <div class="ff-card" role="listitem" style="--i:0">
+              <div class="ff-top">
+                <span class="ff-num" dir="ltr">01</span>
+                <span class="ff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4.5"/></svg></span>
+              </div>
+              <span class="ff-title" data-i18n="flow.t1">הגדרת נהלים</span>
+              <span class="ff-desc" data-i18n="flow.d1">מדיניות הסוכן הנבדק, כטקסט חופשי לעריכה.</span>
+            </div>
+            <div class="ff-link" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+
+            <div class="ff-card" role="listitem" style="--i:1">
+              <div class="ff-top">
+                <span class="ff-num" dir="ltr">02</span>
+                <span class="ff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.2"/><path d="M5.5 19.5c1-3.2 3.6-5 6.5-5s5.5 1.8 6.5 5"/></svg></span>
+              </div>
+              <span class="ff-title" data-i18n="flow.t2">בחירת פרסונה</span>
+              <span class="ff-desc" data-i18n="flow.d2">אחת מתוך ארבע פרסונות קבועות במערכת.</span>
+            </div>
+            <div class="ff-link" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+
+            <div class="ff-card" role="listitem" style="--i:2">
+              <div class="ff-top">
+                <span class="ff-num" dir="ltr">03</span>
+                <span class="ff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a7.5 7.5 0 0 1-10.9 6.7L4 20l1.3-4.8A7.5 7.5 0 1 1 20 12z"/></svg></span>
+              </div>
+              <span class="ff-title" data-i18n="flow.t3">הרצת שיחה</span>
+              <span class="ff-desc" data-i18n="flow.d3">ארבעה חילופי דברים בזמן אמת, ללא תסריט.</span>
+            </div>
+            <div class="ff-link" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+
+            <div class="ff-card" role="listitem" style="--i:3">
+              <div class="ff-top">
+                <span class="ff-num" dir="ltr">04</span>
+                <span class="ff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5v15"/><path d="M7 7h10"/><path d="M7 7l-3 5.5h6z"/><path d="M17 7l-3 5.5h6z"/><path d="M8.5 19.5h7"/></svg></span>
+              </div>
+              <span class="ff-title" data-i18n="flow.t4">שיפוט <bdi>AI</bdi></span>
+              <span class="ff-desc" data-i18n="flow.d4">ניתוח התמלול מול הנהלים שהוגדרו בשלב 01.</span>
+            </div>
+            <div class="ff-link" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+
+            <div class="ff-card" role="listitem" style="--i:4">
+              <div class="ff-top">
+                <span class="ff-num" dir="ltr">05</span>
+                <span class="ff-flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5 21 19.5H3z"/><path d="M12 10v3.6"/><path d="M12 16.6h.01"/></svg><span data-i18n="flow.fail">נקודת כשל בתמלול</span></span>
+                <span class="ff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 16.5h4"/></svg></span>
+              </div>
+              <span class="ff-title" data-i18n="flow.t5">הפקת דו&#1524;ח</span>
+              <span class="ff-desc" data-i18n="flow.d5">ציון מספרי, הערכה כתובה, ונקודת כשל אם קיימת.</span>
+            </div>
+            <div class="ff-link" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+
+            <div class="ff-card" role="listitem" style="--i:5">
+              <div class="ff-top">
+                <span class="ff-num" dir="ltr">06</span>
+                <span class="ff-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 6.3"/><path d="M20 5v5h-5"/></svg></span>
+              </div>
+              <span class="ff-title" data-i18n="flow.t6">פתיחת הרצה חדשה</span>
+              <span class="ff-desc" data-i18n="flow.d6">אותה פרסונה או פרסונה אחרת. חוזרים לשלב 02.</span>
+            </div>
+
+          </div>
+
+          <div class="ff-loop" aria-hidden="true"></div>
+          <svg class="ff-arrow" width="9" height="12" viewBox="0 0 9 12" role="img" aria-label="קשת חזרה מהשלב השישי אל השלב השני">
+            <polygon points="0,0 9,6 0,12" fill="var(--accent)"/>
           </svg>
         </div>
+
+        <figcaption class="ff-cap">
+          <span class="ff-rc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 6.3"/><path d="M20 5v5h-5"/></svg></span>
+          <span data-i18n="flow.loop">משלב 06 חוזרים לשלב 02, עם פרסונה זהה או אחרת.</span>
+        </figcaption>
       </figure>
 
       <h3>שלב 2 — הפלואו המרכזי</h3>
