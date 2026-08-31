@@ -1,34 +1,61 @@
-# AgentEval — Landing Page
+# AgentEval — landing site
 
-Static landing page for AgentEval. Pure HTML/CSS, no build step, no dependencies — deploys as-is on Vercel.
+The static marketing / documentation site for **AgentEval**, an automated QA platform
+for AI agents based on the LLM-as-a-Judge principle. Hand-written HTML + CSS + a little
+vanilla JavaScript. No framework, no build step, no dependencies.
 
-## Structure
+## Live site
 
+**https://agenteval-site.vercel.app**
+
+## Pages
+
+| File | Section | Notes |
+| --- | --- | --- |
+| `index.html` | Home | Nav to the sections below |
+| `problem.html` | The problem | The case for the product, in prose |
+| `prd.html` | PRD | Full product-requirements doc, with an inline six-step "core flow" figure |
+| `research.html` | Research | Background on LLM-as-a-Judge, with a source link |
+| `about.html` | About me | Short bio + LinkedIn |
+
+The **Live Demo** and **GitHub** cards on the home page link out to the interactive demo
+(`https://www.clearcard.online`) and to [its repository](https://github.com/ShalomNoam/clearcard).
+
+## Bilingual (Hebrew / English)
+
+Every page ships in Hebrew and carries a fixed top-corner **עב / EN** switch. `i18n.js` does it
+with no library:
+
+- Hebrew is the source of truth — it lives in the HTML and is captured from the DOM at load.
+- Elements marked `data-i18n="key"` are swapped on toggle. Long prose sections instead carry one
+  `data-i18n-scope="<name>"` on their wrapper; the script auto-assigns sequential keys
+  (`<name>.b1`, `.b2`, …) to every heading / paragraph / list-item inside, so a page needs only
+  one attribute per section.
+- Only the English strings are stored (in `i18n.js`); the toggle also flips `<html dir/lang>` and
+  persists the choice in `localStorage`.
+
+## Design system
+
+`CLAUDE.md` is the visual guide the site is built against — palette (a soft lavender-pastel),
+typography (Archivo / IBM Plex Sans Hebrew / IBM Plex Mono), spacing scale, shadow and shape
+rules, and RTL conventions.
+
+## Local development
+
+No tooling required — open `index.html` in a browser, or serve the folder:
+
+```bash
+python3 -m http.server 8000
 ```
-index.html      — homepage (nav to the 5 sections)
-problem.html    — "The Problem" (final content)
-prd.html        — "PRD" (placeholder — content pending)
-demo.html       — "Live Demo" (placeholder — content pending)
-research.html   — "Research" (placeholder — content pending)
-about.html      — "About Me" (placeholder — content pending)
-```
 
-## Deploy on Vercel
+Then visit `http://localhost:8000`.
 
-1. **Push to GitHub**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial AgentEval landing page"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/<repo-name>.git
-   git push -u origin main
-   ```
-2. **Import to Vercel**
-   - Go to [vercel.com/new](https://vercel.com/new)
-   - Import the GitHub repo you just pushed
-   - Framework preset: **Other** (no build command needed — it's static HTML)
-   - Leave Build Command / Output Directory empty
-   - Click **Deploy**
+## Deploy
 
-That's it — Vercel serves static HTML files with zero configuration.
+Deployed on **Vercel** as a plain static site — no build command, no output directory, no config
+file in the repo. Pushing to `main` triggers a deploy.
+
+## License
+
+No open-source license has been applied, so the code is under standard copyright (all rights
+reserved) by default. It's published as a portfolio project — you're welcome to read through it.
