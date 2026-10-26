@@ -34,18 +34,22 @@
     lenis: { lerp: 0.1, wheelMultiplier: 1 },
     // above-the-fold intro ([data-intro]): one sequenced timeline, bolder than scroll reveals
     intro: {
-      splitDuration: 1.2,
-      splitStagger: 0.06,
-      splitRotate: 12,      // deg, letters tip up into place
-      distance: 40,         // px
-      scaleFrom: 0.94,
-      duration: 1.1,
-      stagger: 0.12,
-      overlap: "-=0.75"     // each step starts before the previous one ends
+      ease: "expo.out",
+      splitDuration: 1.6,
+      splitStagger: 0.08,
+      splitFlip: -100,      // deg on X: letters flip up from lying flat
+      splitRise: 60,        // yPercent the letters start below their line
+      perspective: 600,     // px, depth for the flip
+      distance: 90,         // px the blocks rise
+      sideShift: 48,        // px, cards alternate in from either side
+      scaleFrom: 0.86,
+      duration: 1.4,
+      stagger: 0.14,
+      overlap: "-=1.1"      // each step starts before the previous one ends
     },
     // magnetic pull
-    magneticStrength: 0.1,  // fraction of the cursor offset from the element centre
-    magneticMax: 10,        // px clamp — the home cards are wide, so this is usually the reach
+    magneticStrength: 0.15, // fraction of the cursor offset from the element centre
+    magneticMax: 16,        // px clamp — the home cards are wide, so this is usually the reach
     magneticDuration: 0.6,
     // wait at most this long for web fonts before splitting text
     fontWait: 700
@@ -88,12 +92,13 @@
   function outsideIntro(el) { return !el.closest("[data-intro]"); }
 
   // Splits a headline; returns the pieces to animate and a cleanup, or null without SplitText.
-  function splitHeadline(el) {
+  // Unmasked pieces can travel outside their line box (used by the intro's 3D flip).
+  function splitHeadline(el, unmasked) {
     if (!window.SplitText) return null;
     var type = el.getAttribute("data-split") === "chars" ? "chars" : "words";
     // Keep the readable text for assistive tech; the split spans are presentational.
     el.setAttribute("aria-label", el.textContent.trim());
-    var split = new window.SplitText(el, { type: type, mask: type, aria: "hidden" });
+    var split = new window.SplitText(el, unmasked ? { type: type, aria: "hidden" } : { type: type, mask: type, aria: "hidden" });
     return {
       type: type,
       pieces: split[type],
@@ -127,23 +132,29 @@
     var scope = document.querySelector("[data-intro]");
     if (!scope) return;
     var cfg = MOTION.intro;
-    var tl = gsap.timeline({ defaults: { ease: MOTION.ease } });
+    var tl = gsap.timeline({ defaults: { ease: cfg.ease } });
     scope.querySelectorAll("[data-split], [data-reveal], [data-reveal-stagger]").forEach(function (el, i) {
       var at = i === 0 ? 0 : cfg.overlap;
       if (el.hasAttribute("data-split")) {
-        var split = splitHeadline(el);
+        var split = splitHeadline(el, true);
         if (split) {
           tl.fromTo(split.pieces,
-            { yPercent: 120, rotate: cfg.splitRotate, opacity: 0 },
-            { yPercent: 0, rotate: 0, opacity: 1, duration: cfg.splitDuration, stagger: cfg.splitStagger, onComplete: split.revert },
+            { yPercent: cfg.splitRise, rotationX: cfg.splitFlip, opacity: 0, transformOrigin: "50% 100%", transformPerspective: cfg.perspective },
+            { yPercent: 0, rotationX: 0, opacity: 1, duration: cfg.splitDuration, stagger: cfg.splitStagger, onComplete: split.revert },
             at);
           return;
         }
       }
-      var targets = el.hasAttribute("data-reveal-stagger") ? el.children : el;
-      tl.fromTo(targets,
-        { opacity: 0, y: cfg.distance, scale: cfg.scaleFrom },
-        { opacity: 1, y: 0, scale: 1, duration: cfg.duration, stagger: cfg.stagger, clearProps: "transform" },
+      var group = el.hasAttribute("data-reveal-stagger");
+      tl.fromTo(group ? el.children : el,
+        {
+          opacity: 0,
+          y: cfg.distance,
+          // Groups alternate sides; the sign flip is symmetric, so it reads the same in RTL and LTR.
+          x: group ? function (n) { return n % 2 ? cfg.sideShift : -cfg.sideShift; } : 0,
+          scale: cfg.scaleFrom
+        },
+        { opacity: 1, y: 0, x: 0, scale: 1, duration: cfg.duration, stagger: cfg.stagger, clearProps: "transform" },
         at);
     });
   }
