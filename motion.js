@@ -12,6 +12,8 @@
     data-reveal           single block: fade + rise when it enters the viewport
     data-reveal-stagger   container: its direct children rise in one after another
     data-magnetic         desktop-only subtle pull toward the cursor
+    data-intro            above-the-fold wrapper: the hooks inside it play once on load as one
+                          sequenced timeline (MOTION.intro) instead of on scroll
 
   All tuning lives in MOTION below.
 */
@@ -30,10 +32,21 @@
     revealStart: "top 88%", // ScrollTrigger start for scroll reveals
     // smooth scroll (desktop pointer only)
     lenis: { lerp: 0.1, wheelMultiplier: 1 },
+    // above-the-fold intro ([data-intro]): one sequenced timeline, bolder than scroll reveals
+    intro: {
+      splitDuration: 1.2,
+      splitStagger: 0.06,
+      splitRotate: 12,      // deg, letters tip up into place
+      distance: 40,         // px
+      scaleFrom: 0.94,
+      duration: 1.1,
+      stagger: 0.12,
+      overlap: "-=0.75"     // each step starts before the previous one ends
+    },
     // magnetic pull
-    magneticStrength: 0.06, // fraction of the cursor offset from the element centre
-    magneticMax: 4,         // px clamp — the home cards are wide, so this is usually the reach
-    magneticDuration: 0.5,
+    magneticStrength: 0.1,  // fraction of the cursor offset from the element centre
+    magneticMax: 10,        // px clamp — the home cards are wide, so this is usually the reach
+    magneticDuration: 0.6,
     // wait at most this long for web fonts before splitting text
     fontWait: 700
   };
@@ -71,26 +84,67 @@
     return lenis;
   }
 
+  // Elements inside [data-intro] are played by initIntro, not by the scroll reveals.
+  function outsideIntro(el) { return !el.closest("[data-intro]"); }
+
+  // Splits a headline; returns the pieces to animate and a cleanup, or null without SplitText.
+  function splitHeadline(el) {
+    if (!window.SplitText) return null;
+    var type = el.getAttribute("data-split") === "chars" ? "chars" : "words";
+    // Keep the readable text for assistive tech; the split spans are presentational.
+    el.setAttribute("aria-label", el.textContent.trim());
+    var split = new window.SplitText(el, { type: type, mask: type, aria: "hidden" });
+    return {
+      type: type,
+      pieces: split[type],
+      revert: function () { split.revert(); el.removeAttribute("aria-label"); }
+    };
+  }
+
   /* ---------- headline split ---------- */
   function initSplits() {
-    gsap.utils.toArray("[data-split]").forEach(function (el) {
-      var type = el.getAttribute("data-split") === "chars" ? "chars" : "words";
-      if (!window.SplitText) {
+    gsap.utils.toArray("[data-split]").filter(outsideIntro).forEach(function (el) {
+      var split = splitHeadline(el);
+      if (!split) {
         gsap.fromTo(el, { opacity: 0, y: MOTION.revealDistance }, { opacity: 1, y: 0, duration: MOTION.revealDuration, ease: MOTION.ease });
         return;
       }
-      // Keep the readable text for assistive tech; the split spans are presentational.
-      el.setAttribute("aria-label", el.textContent.trim());
-      var split = new window.SplitText(el, { type: type, mask: type, aria: "hidden" });
-      gsap.from(split[type], {
+      gsap.from(split.pieces, {
         yPercent: 110,
         opacity: 0,
         duration: MOTION.splitDuration,
         ease: MOTION.ease,
-        stagger: MOTION.splitStagger[type],
+        stagger: MOTION.splitStagger[split.type],
         scrollTrigger: { trigger: el, start: MOTION.revealStart, once: true },
-        onComplete: function () { split.revert(); el.removeAttribute("aria-label"); }
+        onComplete: split.revert
       });
+    });
+  }
+
+  /* ---------- above-the-fold intro ----------
+     Headline, then each reveal block, then staggered groups, as one timeline in DOM order. */
+  function initIntro() {
+    var scope = document.querySelector("[data-intro]");
+    if (!scope) return;
+    var cfg = MOTION.intro;
+    var tl = gsap.timeline({ defaults: { ease: MOTION.ease } });
+    scope.querySelectorAll("[data-split], [data-reveal], [data-reveal-stagger]").forEach(function (el, i) {
+      var at = i === 0 ? 0 : cfg.overlap;
+      if (el.hasAttribute("data-split")) {
+        var split = splitHeadline(el);
+        if (split) {
+          tl.fromTo(split.pieces,
+            { yPercent: 120, rotate: cfg.splitRotate, opacity: 0 },
+            { yPercent: 0, rotate: 0, opacity: 1, duration: cfg.splitDuration, stagger: cfg.splitStagger, onComplete: split.revert },
+            at);
+          return;
+        }
+      }
+      var targets = el.hasAttribute("data-reveal-stagger") ? el.children : el;
+      tl.fromTo(targets,
+        { opacity: 0, y: cfg.distance, scale: cfg.scaleFrom },
+        { opacity: 1, y: 0, scale: 1, duration: cfg.duration, stagger: cfg.stagger, clearProps: "transform" },
+        at);
     });
   }
 
@@ -98,7 +152,7 @@
      fromTo, not from: the targets are still hidden by .motion-pending when these
      tweens are created, so their computed opacity can't be the end state. */
   function initReveals() {
-    gsap.utils.toArray("[data-reveal]").forEach(function (el) {
+    gsap.utils.toArray("[data-reveal]").filter(outsideIntro).forEach(function (el) {
       gsap.fromTo(el, { opacity: 0, y: MOTION.revealDistance }, {
         opacity: 1,
         y: 0,
@@ -109,7 +163,7 @@
       });
     });
 
-    gsap.utils.toArray("[data-reveal-stagger]").forEach(function (group) {
+    gsap.utils.toArray("[data-reveal-stagger]").filter(outsideIntro).forEach(function (group) {
       gsap.fromTo(group.children, { opacity: 0, y: MOTION.revealDistance }, {
         opacity: 1,
         y: 0,
@@ -149,6 +203,7 @@
   function start() {
     fontsReady().then(function () {
       initLenis();
+      initIntro();
       initSplits();
       initReveals();
       initMagnetic();
