@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AgentEval</title>
 <script>try{if(localStorage.getItem('agenteval_lang')==='en'){var d=document.documentElement;d.setAttribute('dir','ltr');d.setAttribute('lang','en');var s=document.createElement('style');s.id='i18n-cloak';s.textContent='[data-i18n],[data-i18n-scope]{visibility:hidden}';(document.head||d).appendChild(s);setTimeout(function(){var c=document.getElementById('i18n-cloak');if(c&&c.parentNode)c.parentNode.removeChild(c);},1500);}}catch(e){}</script>
+<script>(function(){var d=document.documentElement;if(window.matchMedia&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion','motion-pending');setTimeout(function(){if(!d.classList.contains('motion-ready'))d.classList.remove('motion','motion-pending');},3000);}})();</script>
+<link rel="stylesheet" href="motion.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -201,6 +203,10 @@
     to{opacity:1; transform:translateY(0);}
   }
 
+  /* motion.js drives the entrance instead of the CSS keyframes when it runs */
+  html.motion header,
+  html.motion .doc-row{animation:none; opacity:1;}
+
   @media (prefers-reduced-motion: reduce){
     .doc-row{animation:none !important; opacity:1 !important; transform:none !important;}
     .doc-row a, .arrow, .num{transition:none !important;}
@@ -219,12 +225,12 @@
 <body>
   <div class="wrap">
     <header>
-      <h1 dir="ltr">AgentEval</h1>
-      <p class="sub" data-i18n="index.sub">סוכן AI שמדמה לקוחות אמיתיים לבדיקה, ניטור וייעול של צ'אטבוטים.<br>בפרויקט בוט של חברת אשראי עם אפשרות בדיקה ידנית&nbsp;/&nbsp;אוטומטית</p>
+      <h1 dir="ltr" data-split="chars">AgentEval</h1>
+      <p class="sub" data-i18n="index.sub" data-reveal>סוכן AI שמדמה לקוחות אמיתיים לבדיקה, ניטור וייעול של צ'אטבוטים.<br>בפרויקט בוט של חברת אשראי עם אפשרות בדיקה ידנית&nbsp;/&nbsp;אוטומטית</p>
     </header>
 
-    <nav class="index" dir="ltr">
-      <div class="doc-row">
+    <nav class="index" dir="ltr" data-reveal-stagger>
+      <div class="doc-row" data-magnetic>
         <a href="problem.html">
           <span class="doc-title-block">
             <span class="title">The problem</span>
@@ -232,7 +238,7 @@
           <span class="arrow">→</span>
         </a>
       </div>
-      <div class="doc-row">
+      <div class="doc-row" data-magnetic>
         <a href="https://www.clearcard.online/" target="_blank" rel="noopener noreferrer">
           <span class="doc-title-block">
             <span class="title">Live Demo</span>
@@ -240,7 +246,7 @@
           <span class="arrow">→</span>
         </a>
       </div>
-      <div class="doc-row">
+      <div class="doc-row" data-magnetic>
         <a href="prd.html">
           <span class="doc-title-block">
             <span class="title">PRD</span>
@@ -248,7 +254,7 @@
           <span class="arrow">→</span>
         </a>
       </div>
-      <div class="doc-row">
+      <div class="doc-row" data-magnetic>
         <a href="research.html">
           <span class="doc-title-block">
             <span class="title">Research</span>
@@ -256,7 +262,7 @@
           <span class="arrow">→</span>
         </a>
       </div>
-      <div class="doc-row">
+      <div class="doc-row" data-magnetic>
         <a href="about.html">
           <span class="doc-title-block">
             <span class="title">About Me</span>
@@ -264,7 +270,7 @@
           <span class="arrow">→</span>
         </a>
       </div>
-      <div class="doc-row">
+      <div class="doc-row" data-magnetic>
         <a href="https://github.com/ShalomNoam/clearcard" target="_blank" rel="noopener noreferrer">
           <span class="doc-title-block">
             <span class="title">GitHub</span>
@@ -275,5 +281,10 @@
     </nav>
   </div>
 <script src="i18n.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
+<script src="motion.js" defer></script>
 </body>
 </html>

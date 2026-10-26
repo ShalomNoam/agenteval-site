@@ -1,0 +1,14 @@
+/* AgentEval — motion layer support. See motion.js for the hooks and tuning. */
+
+/* Hidden only while motion.js is about to take over; without JS (or under
+   prefers-reduced-motion) these classes are never set and nothing is hidden. */
+html.motion-pending [data-split],
+html.motion-pending [data-reveal],
+html.motion-pending [data-reveal-stagger] > *{
+  opacity:0;
+}
+
+/* Lenis */
+html.lenis, html.lenis body{ height:auto; }
+.lenis.lenis-smooth{ scroll-behavior:auto !important; }
+.lenis.lenis-stopped{ overflow:hidden; }
