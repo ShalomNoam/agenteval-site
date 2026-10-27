@@ -4,7 +4,8 @@
    prefers-reduced-motion) these classes are never set and nothing is hidden. */
 html.motion-pending [data-split],
 html.motion-pending [data-reveal],
-html.motion-pending [data-reveal-stagger] > *{
+html.motion-pending [data-reveal-stagger] > *,
+html.motion-pending [data-reveal-each] > *{
   opacity:0;
 }
 

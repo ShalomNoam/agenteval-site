@@ -5,165 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Research · AgentEval</title>
 <script>try{if(localStorage.getItem('agenteval_lang')==='en'){var d=document.documentElement;d.setAttribute('dir','ltr');d.setAttribute('lang','en');var s=document.createElement('style');s.id='i18n-cloak';s.textContent='[data-i18n],[data-i18n-scope]{visibility:hidden}';(document.head||d).appendChild(s);setTimeout(function(){var c=document.getElementById('i18n-cloak');if(c&&c.parentNode)c.parentNode.removeChild(c);},1500);}}catch(e){}</script>
+<script>(function(){var d=document.documentElement;if(window.matchMedia&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion','motion-pending');setTimeout(function(){if(!d.classList.contains('motion-ready'))d.classList.remove('motion','motion-pending');},3000);}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#eeecf6;
-    --bg-hi:#f8f6fc;
-    --bg-lo:#e6e3f0;
-    --card:#ffffff;
-    --panel-2:#fbfbfe;
-    --brand-light:#c7cfff;
-    --ink:#12162a;
-    --rule:#e6e6f2;
-    --accent:#8a93f0;
-    --accent-dim:#6b7386;
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{height:100%;}
-
-  body{
-    background-color:var(--bg);
-    background-image:linear-gradient(176deg, var(--bg-hi) 0%, var(--bg) 42%, var(--bg-lo) 100%);
-    background-attachment:fixed;
-    color:var(--ink);
-    font-family:'IBM Plex Sans Hebrew', 'Archivo', sans-serif;
-    min-height:100vh;
-    position:relative;
-    overflow-x:hidden;
-  }
-
-  /* subtle paper grain backdrop, matching the homepage */
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
-    opacity:.035;
-    mix-blend-mode:multiply;
-    pointer-events:none;
-    z-index:0;
-  }
-  body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle at 50% 28%, transparent 0%, transparent 40%, rgba(18,22,42,.04) 100%);
-    pointer-events:none;
-    z-index:0;
-  }
-
-  .wrap{
-    position:relative;
-    z-index:1;
-    max-width:760px;
-    margin:0 auto;
-    padding:clamp(28px, 6vw, 72px) 24px 96px;
-  }
-
-  .back{
-    float:right;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    text-decoration:none;
-    color:var(--accent-dim);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    letter-spacing:.04em;
-    padding:8px 4px;
-    transition:color .25s ease, gap .25s ease;
-  }
-  .back:hover, .back:focus-visible{
-    color:var(--accent);
-    gap:12px;
-  }
-
-  header{
-    clear:both;
-    margin:clamp(32px, 6vh, 56px) 0 clamp(36px, 6vh, 56px);
-    padding-bottom:28px;
-    border-bottom:1px solid var(--rule);
-  }
-
-  h1{
-    font-family:'Archivo', 'IBM Plex Sans Hebrew', sans-serif;
-    font-weight:800;
-    font-size:clamp(32px, 5.5vw, 46px);
-    line-height:1.2;
-    direction:ltr;
-    text-align:left;
-  }
-
-  article{
-    font-size:18px;
-    line-height:1.95;
-  }
-
-  article p{
-    margin-bottom:26px;
-  }
-
-  article p:last-child{
-    margin-bottom:0;
-  }
-
-  .source{
-    margin-top:clamp(40px, 7vh, 64px);
-    font-size:14px;
-    line-height:1.7;
-    color:#6b7386;
-  }
-  .source a{
-    color:var(--accent-dim);
-    text-decoration:none;
-    border-bottom:1px solid var(--rule);
-    transition:color .25s ease, border-color .25s ease;
-    overflow-wrap:anywhere;
-  }
-  .source a:hover, .source a:focus-visible{
-    color:var(--accent);
-    border-color:var(--accent);
-  }
-
-  @media (max-width:560px){
-    article{font-size:16.5px; line-height:1.85;}
-  }
-</style>
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="motion.css">
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap page">
     <a class="back" href="index.html" dir="ltr">
       <span>→</span>
       <span>AgentEval</span>
     </a>
 
-    <header>
-      <h1 dir="ltr">Research</h1>
+    <header class="hero" data-intro>
+      <h1 dir="ltr" data-split="chars" data-parallax>Research</h1>
     </header>
 
-    <article data-i18n-scope="research">
-      <p>בשנים האחרונות סוכני בינה מלאכותית עברו ממעמד של כלי ניסיוני למערכות שמדברות ישירות עם לקוחות אמיתיים, בתחומים כמו שירות לקוחות, בנקאות ומסחר. המעבר הזה חושף בעיה שלא הייתה קיימת באותה חומרה כשמדובר היה בתוכנה קלאסית. בוט מבוסס מודל שפה לא פועל לפי חוקים קשיחים וצפויים, אלא מייצר תגובות בצורה גמישה בכל שיחה מחדש, ולכן אי אפשר לבדוק אותו רק באמצעות מבחני יחידה מסורתיים. הבדיקה חייבת לכסות טווח עצום של דרכים אפשריות שבהן משתמש עלול לנסח בקשה, לטעות, להפעיל לחץ או אפילו לנסות לתמרן את המערכת כדי לעקוף מדיניות.</p>
+    <div class="body-grid">
+      <div class="rail" aria-hidden="true"><span class="rail-track"><span class="rail-fill"></span></span></div>
+      <div class="col">
+      <article class="prose prose--long" data-reveal-each data-i18n-scope="research">
+        <p>בשנים האחרונות סוכני בינה מלאכותית עברו ממעמד של כלי ניסיוני למערכות שמדברות ישירות עם לקוחות אמיתיים, בתחומים כמו שירות לקוחות, בנקאות ומסחר. המעבר הזה חושף בעיה שלא הייתה קיימת באותה חומרה כשמדובר היה בתוכנה קלאסית. בוט מבוסס מודל שפה לא פועל לפי חוקים קשיחים וצפויים, אלא מייצר תגובות בצורה גמישה בכל שיחה מחדש, ולכן אי אפשר לבדוק אותו רק באמצעות מבחני יחידה מסורתיים. הבדיקה חייבת לכסות טווח עצום של דרכים אפשריות שבהן משתמש עלול לנסח בקשה, לטעות, להפעיל לחץ או אפילו לנסות לתמרן את המערכת כדי לעקוף מדיניות.</p>
 
-      <p>הגישה המסורתית לבעיה הזו הייתה בדיקה ידנית, שבה צוות אנושי כותב מאות תרחישים אפשריים ומריץ אותם שוב ושוב מול הבוט. השיטה הזו איטית, יקרה ולא ניתנת לקנה מידה. לפי ניתוחים בתחום, כדי להגיע לכיסוי שמודל שיפוט אוטומטי מספק במהלך לילה אחד, נדרש צוות של עשרות בודקים אנושיים שיעבדו במקביל במשך יום שלם.</p>
+        <p>הגישה המסורתית לבעיה הזו הייתה בדיקה ידנית, שבה צוות אנושי כותב מאות תרחישים אפשריים ומריץ אותם שוב ושוב מול הבוט. השיטה הזו איטית, יקרה ולא ניתנת לקנה מידה. לפי ניתוחים בתחום, כדי להגיע לכיסוי שמודל שיפוט אוטומטי מספק במהלך לילה אחד, נדרש צוות של עשרות בודקים אנושיים שיעבדו במקביל במשך יום שלם.</p>
 
-      <p>בשנים האחרונות התפתחה בקהילת המחקר גישה חלופית שנקראת LLM as a Judge, שבה מודל שפה משמש כשופט שמעריך את הפלט של מודל אחר. המחקר המכונן בתחום, שבחן את הגישה על אלפי השוואות בין תשובות של מודלים שונים, מצא ששופטי GPT-4 הגיעו להסכמה של מעל שמונים אחוז עם העדפות אנושיות, רמה זהה לרמת ההסכמה שמעריכים אנושיים מגיעים אליה ביניהם. מחקרים מאוחרים יותר דיווחו על תוצאות דומות ואף גבוהות מהן, לעיתים עד תשעים אחוז ומעלה, כאשר מודל השפה המשמש כשופט הוא מודל חזק וההנחיה שהוא מקבל בנויה כרשימת קריטריונים ברורים ולא כשאלה כללית ועמומה.</p>
+        <p>בשנים האחרונות התפתחה בקהילת המחקר גישה חלופית שנקראת LLM as a Judge, שבה מודל שפה משמש כשופט שמעריך את הפלט של מודל אחר. המחקר המכונן בתחום, שבחן את הגישה על אלפי השוואות בין תשובות של מודלים שונים, מצא ששופטי GPT-4 הגיעו להסכמה של מעל שמונים אחוז עם העדפות אנושיות, רמה זהה לרמת ההסכמה שמעריכים אנושיים מגיעים אליה ביניהם. מחקרים מאוחרים יותר דיווחו על תוצאות דומות ואף גבוהות מהן, לעיתים עד תשעים אחוז ומעלה, כאשר מודל השפה המשמש כשופט הוא מודל חזק וההנחיה שהוא מקבל בנויה כרשימת קריטריונים ברורים ולא כשאלה כללית ועמומה.</p>
 
-      <p>יחד עם זאת, רמת ההסכמה הזו אינה אחידה בכל סוגי המשימות. בבדיקות שנעשו על משימות פתוחות יותר, כמו כתיבה יצירתית או הנמקה פתוחה, רמת ההסכמה בין שופט מלאכותי לשופט אנושי צנחה לכדי כחמישים עד שישים אחוז בלבד, מה שמעיד על כך שאמינות השופט תלויה מאוד באופי המשימה ובבהירות הקריטריונים שהוגדרו לו מראש.</p>
+        <p>יחד עם זאת, רמת ההסכמה הזו אינה אחידה בכל סוגי המשימות. בבדיקות שנעשו על משימות פתוחות יותר, כמו כתיבה יצירתית או הנמקה פתוחה, רמת ההסכמה בין שופט מלאכותי לשופט אנושי צנחה לכדי כחמישים עד שישים אחוז בלבד, מה שמעיד על כך שאמינות השופט תלויה מאוד באופי המשימה ובבהירות הקריטריונים שהוגדרו לו מראש.</p>
 
-      <p>לצד זאת, אותם מחקרים חשפו הטיות שיטתיות ברורות. באותו מחקר מכונן נמצא ששופטים מבוססי מודל שפה מעדיפים את התשובה הראשונה שמוצגת להם בעד שבעים וחמישה אחוז מהמקרים, גם כשאין הבדל ממשי באיכות בין שתי התשובות. נמצאה גם הטיית העדפה עצמית, כלומר מודל שמשמש כשופט נוטה להעדיף תשובות שהופקו על ידי מודלים מאותה משפחה שלו, כאשר אצל GPT-4 ההטיה הזו הייתה בסביבות עשרה אחוז יתרון בשיעור הזכייה, ואצל מודלים אחרים שנבדקו ההטיה הגיעה עד כדי עשרים וחמישה אחוז. הטיה נוספת שתועדה היא נטייה עקבית להעדיף תשובות ארוכות יותר, גם כשאורך התשובה לא תרם בפועל לאיכותה.</p>
+        <p>לצד זאת, אותם מחקרים חשפו הטיות שיטתיות ברורות. באותו מחקר מכונן נמצא ששופטים מבוססי מודל שפה מעדיפים את התשובה הראשונה שמוצגת להם בעד שבעים וחמישה אחוז מהמקרים, גם כשאין הבדל ממשי באיכות בין שתי התשובות. נמצאה גם הטיית העדפה עצמית, כלומר מודל שמשמש כשופט נוטה להעדיף תשובות שהופקו על ידי מודלים מאותה משפחה שלו, כאשר אצל GPT-4 ההטיה הזו הייתה בסביבות עשרה אחוז יתרון בשיעור הזכייה, ואצל מודלים אחרים שנבדקו ההטיה הגיעה עד כדי עשרים וחמישה אחוז. הטיה נוספת שתועדה היא נטייה עקבית להעדיף תשובות ארוכות יותר, גם כשאורך התשובה לא תרם בפועל לאיכותה.</p>
 
-      <p>כדי להתמודד עם ההטיות הללו, אחת השיטות המקובלות כיום היא לבדוק את השופט עצמו כמערכת שצריכה בקרה, למשל להציג לו את אותו זוג תשובות פעמיים בסדר הפוך, ואם פסק הדין מתהפך זהו סימן ברור להטיה לפי מיקום ולא הערכה אמיתית של התוכן. שיטה נוספת היא כיול השופט מול מדגם קטן של דוגמאות שסומנו ידנית, ובדיקה חוזרת שלו לאורך זמן כדי לוודא שהוא לא סוטה מהסטנדרט שנקבע.</p>
+        <p>כדי להתמודד עם ההטיות הללו, אחת השיטות המקובלות כיום היא לבדוק את השופט עצמו כמערכת שצריכה בקרה, למשל להציג לו את אותו זוג תשובות פעמיים בסדר הפוך, ואם פסק הדין מתהפך זהו סימן ברור להטיה לפי מיקום ולא הערכה אמיתית של התוכן. שיטה נוספת היא כיול השופט מול מדגם קטן של דוגמאות שסומנו ידנית, ובדיקה חוזרת שלו לאורך זמן כדי לוודא שהוא לא סוטה מהסטנדרט שנקבע.</p>
 
-      <p>התפתחות נוספת בתחום היא המעבר מהערכה חד ממדית של תשובה בודדת, להערכה של סוכן שלם לאורך תהליך, כולל הבחירות שהוא עושה, השימוש בכלים והדרך שבה הוא מגיע לתשובה. גישה כזו נדרשת כי סוכן יכול להצליח במשימה דרך נתיב בזבזני או שגוי, או לבצע קריאות לכלים בהצלחה טכנית אך עדיין לא לענות בפועל על מה שהמשתמש רצה. בהקשר הזה, סקרים על אימוץ הגישה בתעשייה מדווחים כי כתשעים ושניים אחוז מהצוותים שמפתחים מוצרי בינה מלאכותית כבר משלבים היום הערכה אוטומטית כלשהי בתהליך הפיתוח השוטף שלהם, מה שמעיד על כך שהמעבר משיפוט אנושי לשיפוט מבוסס מודל שפה הוא כבר לא כיוון עתידי אלא מגמה מבוססת בתעשייה.</p>
-    </article>
+        <p>התפתחות נוספת בתחום היא המעבר מהערכה חד ממדית של תשובה בודדת, להערכה של סוכן שלם לאורך תהליך, כולל הבחירות שהוא עושה, השימוש בכלים והדרך שבה הוא מגיע לתשובה. גישה כזו נדרשת כי סוכן יכול להצליח במשימה דרך נתיב בזבזני או שגוי, או לבצע קריאות לכלים בהצלחה טכנית אך עדיין לא לענות בפועל על מה שהמשתמש רצה. בהקשר הזה, סקרים על אימוץ הגישה בתעשייה מדווחים כי כתשעים ושניים אחוז מהצוותים שמפתחים מוצרי בינה מלאכותית כבר משלבים היום הערכה אוטומטית כלשהי בתהליך הפיתוח השוטף שלהם, מה שמעיד על כך שהמעבר משיפוט אנושי לשיפוט מבוסס מודל שפה הוא כבר לא כיוון עתידי אלא מגמה מבוססת בתעשייה.</p>
+      </article>
 
-    <p class="source" data-i18n="research.src">
-      מקור: <a href="https://www.confident-ai.com/blog/why-llm-as-a-judge-is-the-best-llm-evaluation-method" target="_blank" rel="noopener noreferrer" dir="ltr">Why LLM-as-a-Judge is the Best LLM Evaluation Method — Confident AI</a>
-    </p>
+      <p class="source" data-i18n="research.src">
+        מקור: <a href="https://www.confident-ai.com/blog/why-llm-as-a-judge-is-the-best-llm-evaluation-method" target="_blank" rel="noopener noreferrer" dir="ltr">Why LLM-as-a-Judge is the Best LLM Evaluation Method — Confident AI</a>
+      </p>
+      </div>
+    </div>
   </div>
 <script src="i18n.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
+<script src="motion.js" defer></script>
 </body>
 </html>
