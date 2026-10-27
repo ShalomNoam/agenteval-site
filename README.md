@@ -1,8 +1,9 @@
 # AgentEval — landing site
 
 The static marketing / documentation site for **AgentEval**, an automated QA platform
-for AI agents based on the LLM-as-a-Judge principle. Hand-written HTML + CSS + a little
-vanilla JavaScript. No framework, no build step, no dependencies.
+for AI agents based on the LLM-as-a-Judge principle. Hand-written HTML + CSS + vanilla
+JavaScript, with GSAP and Lenis loaded from a CDN for motion. No framework, no build step,
+no `npm install`.
 
 ## Live site
 
@@ -18,7 +19,16 @@ vanilla JavaScript. No framework, no build step, no dependencies.
 | `research.html` | Research | Background on LLM-as-a-Judge, with a source link |
 | `about.html` | About me | Short bio + LinkedIn |
 
-The **Live Demo** and **GitHub** cards on the home page link out to the interactive demo
+Shared files:
+
+| File | Role |
+| --- | --- |
+| `site.css` | All page styles, in one stylesheet |
+| `motion.js` | Scroll and motion layer; every tuning value lives in its `MOTION` object |
+| `motion.css` | Hides animated elements only while `motion.js` is about to take over |
+| `i18n.js` | Hebrew / English switch (see below) |
+
+The **Live Demo** and **GitHub** rows on the home page link out to the interactive demo
 (`https://www.clearcard.online`) and to [its repository](https://github.com/ShalomNoam/clearcard).
 
 ## Bilingual (Hebrew / English)
@@ -34,15 +44,26 @@ with no library:
 - Only the English strings are stored (in `i18n.js`); the toggle also flips `<html dir/lang>` and
   persists the choice in `localStorage`.
 
+## Motion
+
+`motion.js` uses GSAP 3.13 (with ScrollTrigger and SplitText) and Lenis 1.3, pinned to exact
+versions on jsDelivr. Pages opt in through HTML attributes (`data-intro`, `data-split`,
+`data-reveal`, `data-scrub`, `data-parallax`, `data-magnetic`, …) rather than per-page code.
+
+It is progressive enhancement only: content stays fully visible without JavaScript, if the CDN
+fails (a 3-second failsafe in each page's `<head>`), and under `prefers-reduced-motion`. Smooth
+scrolling and the magnetic hover run on desktop pointers only.
+
 ## Design system
 
-`CLAUDE.md` is the visual guide the site is built against — palette (a soft lavender-pastel),
-typography (Archivo / IBM Plex Sans Hebrew / IBM Plex Mono), spacing scale, shadow and shape
-rules, and RTL conventions.
+`CLAUDE.md` is the visual guide the site is built against — an editorial layout on a soft
+lavender-pastel palette, typography (Archivo / IBM Plex Sans Hebrew / IBM Plex Mono), layout
+grid, shape rules, the motion hooks, and RTL conventions.
 
 ## Local development
 
-No tooling required — open `index.html` in a browser, or serve the folder:
+No tooling required — serve the folder (opening `index.html` directly also works, but the
+motion libraries need a network connection either way):
 
 ```bash
 python3 -m http.server 8000
